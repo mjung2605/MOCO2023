@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 141.99 176.61">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #231f20;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-3 {
+        font-family: Bahnschrift-SemiBold, Bahnschrift;
+        font-size: 100px;
+        font-variation-settings: 'wght' 600, 'wdth' 100;
+        font-weight: 600;
+      }
+
+      .cls-3, .cls-4 {
+        fill: #231f20;
+      }
+
+      .cls-5 {
+        letter-spacing: -.06em;
+      }
+
+      .cls-6 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-7 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-8 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-9 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-4 {
+        font-family: Bahnschrift, Bahnschrift;
+        font-size: 27px;
+        font-variation-settings: 'wght' 400, 'wdth' 100;
+      }
+    </style>
+  </defs>
+  <text class="cls-3" transform="translate(2.55 104.61)"><tspan class="cls-2" x="0" y="0">G</tspan><tspan class="cls-7" x="59.67" y="0">M</tspan></text>
+  <text class="cls-4" transform="translate(9.65 172.9)"><tspan class="cls-9" x="0" y="0">G</tspan><tspan class="cls-5" x="15.66" y="0">O</tspan><tspan class="cls-6" x="31.55" y="0">L</tspan><tspan class="cls-5" x="45.76" y="0">D</tspan><tspan class="cls-8" x="61.95" y="0">MINE</tspan></text>
+  <rect class="cls-1" x="1.33" y="1.41" width="139.12" height="139.12"/>
+</svg>
