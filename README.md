@@ -1,5 +1,7 @@
 # MOCO2023
-Repository für das Modul Mobile Computing im Sommersemester 2023 - Bachelor Medieninformatik 
+*cd Branch*
+
+beinhaltet das Logo, die Wireframes sowie andere Inhalte des Corporate Designs für das Projekt "Goldmine"
 
 
 Goldmine 
