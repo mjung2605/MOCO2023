@@ -7,7 +7,6 @@ import android.widget.HorizontalScrollView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.relocation.bringIntoViewRequester
@@ -19,6 +18,7 @@ import com.example.mocotest.ui.theme.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.painter.Painter
@@ -57,10 +57,20 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// Titlescreen
 @Composable
-fun TextStyling() {
-}
+fun TitleScreen() {
 
+    Box(Modifier
+            .background(brush = Brush.verticalGradient(listOf(MainBlue, MainGreen)))
+            .fillMaxSize(),
+    contentAlignment = Alignment.Center) {
+        Box() {
+            Image(painterResource(id = R.drawable.goldmine_2_3x), "gm_logo",
+                Modifier.size(400.dp))
+        }
+    }
+}
 
 @Composable
 fun TopBar(text: String) { // Text ist davon abhängig ob wir gerade auf der
@@ -107,7 +117,6 @@ fun TopBar(text: String) { // Text ist davon abhängig ob wir gerade auf der
     }
 }
 
-
 @Composable
 fun BottomBar() {
     Box(
@@ -142,7 +151,6 @@ fun BottomBar() {
 }
 
 // Screen: Main Page
-
 @Composable
 fun MainTabs(leftText: String, rightText: String) {
 
@@ -175,7 +183,7 @@ fun MainTabs(leftText: String, rightText: String) {
 }
 
 @Composable
-fun ListEntryLayoutMain(
+fun ListEntryLayoutMain( // Ein Eintrag auf der Main Page
     colorBorder: Color,
     entryTitle: String,
     description: String
@@ -215,7 +223,10 @@ fun ListEntryLayoutMain(
                 }
                 Row() {
 
-                        Text(text = description.take(100) + "...", Modifier.padding(top = 10.dp).fillMaxSize()) // Beschreibung (gekürzt)
+                        Text(text = description.take(100) + "...",
+                            Modifier
+                                .padding(top = 10.dp)
+                                .fillMaxSize()) // Beschreibung (gekürzt)
 
                 }
 
@@ -225,7 +236,7 @@ fun ListEntryLayoutMain(
 }
 
 @Composable
-fun ListEntryLayoutPersonal(
+fun ListEntryLayoutPersonal( // Ein persönlicher Eintrag
     colorBorder: Color,
     entryTitle: String,
     description: String
@@ -243,7 +254,7 @@ fun ListEntryLayoutPersonal(
                     .border(BorderStroke(2.dp, colorBorder), RoundedCornerShape(3.dp))
                     .width(85.dp)
                     .height(85.dp)
-                // serves as Container (so that picture Content isn't outsite border)
+                // serves as Container (so that picture content isn't outsite border corners)
             ) {
                 Box(
                     modifier = Modifier
@@ -267,15 +278,15 @@ fun ListEntryLayoutPersonal(
                             .fillMaxSize()
                     ) {
                         Row() {
-                            Box(Modifier.padding(30.dp)) {
+                            Box(Modifier.padding(end=30.dp)) {
                                 Text(text = description.take(70) + "...")
+                            }
+                            Box() {
                                 Image(
                                     painter = painterResource(id = R.drawable.outline_delete_48),
-                                    contentDescription = "delete_icon",
+                                    contentDescription = "delete_icon", Modifier.fillMaxSize()
                                 )
-
                             }
-
                         }
                     }
 
@@ -295,7 +306,7 @@ fun ListOfEntrysLayoutMain(justForDisplayDesc: String) { // die Auflistung der F
             .verticalScroll(rememberScrollState())
     ) {
         // nur Platzhalter für Visualisierung//
-        ListEntryLayoutMain(MainBlue, "Handy", justForDisplayDesc )
+        ListEntryLayoutMain(MainBlue, "Handy", justForDisplayDesc)
         ListEntryLayoutMain(MainBlue, "Geldbeutel", justForDisplayDesc)
         ListEntryLayoutMain(MainBlue, "Schlüssel", justForDisplayDesc)
         ListEntryLayoutMain(MainBlue, "Tasche", justForDisplayDesc)
@@ -346,20 +357,22 @@ fun ListOfEntrysLayoutPersonal(justForDisplayDesc: String) {
             description = justForDisplayDesc
         )
     }
-
-
 }
 
 // Split Preview
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
 
     val justForDisplayDesc =
         "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-    // Preview Main Seite:
 
+    // Preview Title Screen:
+    TitleScreen()
+
+    // Preview Main Page List:
+
+    /*
     MOCOTestTheme {
         Column(verticalArrangement = Arrangement.SpaceEvenly) {
             TopBar("Goldmine")
@@ -369,9 +382,10 @@ fun DefaultPreview() {
         }
     }
 
+     */
 
-    // Preview Personal Page:
-/*
+    // Preview Personal Page List:
+    /*
     MOCOTestTheme {
         Column(verticalArrangement = Arrangement.SpaceEvenly) {
             TopBar(text = "Persönliches")
@@ -383,7 +397,6 @@ fun DefaultPreview() {
         }
     }
 
- */
-
+     */
 }
 
