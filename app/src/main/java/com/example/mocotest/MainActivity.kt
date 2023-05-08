@@ -33,7 +33,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.mocotest.ui.theme.*
 import org.intellij.lang.annotations.JdkConstants.TabLayoutPolicy
 
@@ -42,38 +47,87 @@ import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 import java.time.format.TextStyle
 
+sealed class Screen(val route: String) {
+
+    object TitleScreen: Screen("home")
+    object MainScreenTabs: Screen("main_entrys") // List von Einträgen (Gesucht/Gefunden)
+    // object DetailedEntry: Screen("detail_entry")
+    object PersonalEntrys: Screen("personal_entrys")
+
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent { // call Comps from below
             MOCOTestTheme {
-                TopBar("Goldmine")
-                MainTabs("Gesucht", "Gefunden")
-                ListOfEntrysLayoutMain("lalalalala")
-                BottomBar()
+                val navController = rememberNavController()
+                NavApplicationHost(navController)
             }
         }
     }
 }
 
-// Titlescreen
+// Composable to store NavHost
 @Composable
-fun TitleScreen() {
+fun NavApplicationHost(navController: NavHostController) {
 
-    Box(Modifier
+    NavHost(navController = navController, startDestination = Screen.TitleScreen.route) {
+        // define all possible destinations
+        composable(Screen.TitleScreen.route) { TitleScreen(navController) }
+        composable(Screen.MainScreenTabs.route) { MainEntryList(navController) }
+        composable(Screen.PersonalEntrys.route) { PersonalEntryList(navController) }
+    }
+}
+
+///// FINAL SCREENS //////
+
+@Composable
+fun TitleScreen(navController: NavHostController) {
+    Box(
+        Modifier
             .background(brush = Brush.verticalGradient(listOf(MainBlue, MainGreen)))
             .fillMaxSize(),
-    contentAlignment = Alignment.Center) {
-        Box() {
+        contentAlignment = Alignment.Center) {
+        Box(Modifier.clickable { navController.navigate(Screen.MainScreenTabs.route) }) {
             Image(painterResource(id = R.drawable.goldmine_2_3x), "gm_logo",
-                Modifier.size(400.dp))
+                Modifier
+                    .size(400.dp)
+                    )
         }
     }
 }
 
 @Composable
-fun TopBar(text: String) { // Text ist davon abhängig ob wir gerade auf der
+fun MainEntryList(navController: NavHostController) {
+
+    Column() {
+        TopBar(text = "Goldmine", navController)
+        MainTabs("Gesucht", "Gefunden")
+        ListOfEntrysLayoutMain(justForDisplayDesc = "Hier könnte Ihr Text stehen!!!")
+        BottomBar()
+    }
+
+}
+
+@Composable
+fun PersonalEntryList(navController: NavHostController) {
+
+    Column() {
+        TopBar(text = "Persönliches", navController)
+        MainTabs(leftText = "Gesucht", rightText = "Gefunden")
+        ListOfEntrysLayoutPersonal(justForDisplayDesc = "Hier könnte Ihr Text stehen!")
+        BottomBar()
+    }
+
+}
+
+
+
+////// SCREEN COMPONENTS ////////
+
+@Composable
+fun TopBar(text: String, navController: NavHostController) { // Text ist davon abhängig ob wir gerade auf der
     // Main Page oder der Personal Page sind
     Box(
         Modifier
@@ -87,6 +141,7 @@ fun TopBar(text: String) { // Text ist davon abhängig ob wir gerade auf der
                     .padding(10.dp)
                     .width(35.dp)
                     .fillMaxHeight()
+                    .clickable { navController.navigate(Screen.MainScreenTabs.route) }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.goldmine_2_3x_quadrat),
@@ -106,7 +161,10 @@ fun TopBar(text: String) { // Text ist davon abhängig ob wir gerade auf der
                 Modifier
                     .padding(10.dp)
                     .width(50.dp)
-                    .fillMaxHeight(), contentAlignment = Alignment.TopEnd
+                    .fillMaxHeight()
+                    .clickable { navController.navigate(Screen.PersonalEntrys.route) }
+                , contentAlignment = Alignment.TopEnd
+
             ) {// Personal Page button
                 Image(
                     painter = painterResource(id = R.drawable.outline_account_circle_48_black),
@@ -364,11 +422,12 @@ fun ListOfEntrysLayoutPersonal(justForDisplayDesc: String) {
 @Composable
 fun DefaultPreview() {
 
+    val navController = rememberNavController()
     val justForDisplayDesc =
         "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
 
     // Preview Title Screen:
-    TitleScreen()
+    NavApplicationHost(navController)
 
     // Preview Main Page List:
 
