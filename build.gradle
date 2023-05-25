@@ -2,11 +2,6 @@ buildscript {
     ext {
         compose_ui_version = '1.2.0'
     }
-
-    dependencies {
-        //classpath "com.android.tools.build:gradle-api:8.0.0"
-        classpath "org.jetbrains.kotlin:kotlin-ksp:1.4.0-rc-dev-experimental-20200828"
-    }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     id 'com.android.application' version '7.4.2' apply false

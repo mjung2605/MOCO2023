@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.mocotest'
+    namespace 'com.example.mocogm'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.mocotest"
+        applicationId "com.example.mocogm"
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -62,5 +62,5 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
     // ADDED:
-    implementation "androidx.navigation:navigation-compose:2.5.2"
+    implementation "androidx.navigation:navigation-compose:2.5.3"
 }

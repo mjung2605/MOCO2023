@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "MOCO Test"
+rootProject.name = "MOCOGM"
 include ':app'
