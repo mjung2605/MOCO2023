@@ -119,8 +119,7 @@ fun Photo() {
             .background(LightGray) // Platzhalter-Farbe
 
     ) {
-        // Hier sieht man normalerweise das Foto
-        // TODO()
+    // TODO()
     }
 }
 

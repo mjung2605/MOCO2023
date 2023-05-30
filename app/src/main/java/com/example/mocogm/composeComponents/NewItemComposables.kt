@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.addPathNodes
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mocogm.R
 import com.example.mocogm.ui.theme.*
+import java.io.File
 
 @Composable
 fun NewItem(
@@ -123,6 +125,8 @@ fun AddPhoto() {
             textAlign = TextAlign.Center,
             modifier = Modifier
         )
+        TODO("Hier kommt Kamera rein")
+        //CameraView(outputDirectory = File("storage/emulated/0/Pictures/"), executor = , onImageCaptured = , onError = )
     }
 }
 

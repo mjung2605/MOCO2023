@@ -23,6 +23,7 @@ import com.example.mocogm.ui.theme.MainGreen
 import com.example.mocogm.ui.theme.OffBlack
 import com.example.mocogm.R
 
+
 // Neuer Eintrag Auswahl Gesucht oder Gefunden //
 
 @Composable
