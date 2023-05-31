@@ -12,20 +12,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mocogm.ui.theme.*
 import com.example.mocogm.R
 
+@Preview
 @Composable
-fun TopBar(text: String, onClickHome: () -> Unit, onClickProfile: () -> Unit) { // Text ist davon abhängig ob wir gerade auf der Main Page oder der Personal Page sind
+fun TopBar(text: String = "GoldMine", onClickHome: () -> Unit = {}, onClickChat: () -> Unit = {}, onClickProfile: () -> Unit = {})  { // Text ist davon abhängig ob wir gerade auf der Main Page oder der Personal Page sind
     Box(
         Modifier
             .fillMaxWidth()
             .height(55.dp)
             .background(OffWhite)
     ) {
-        Row(horizontalArrangement = Arrangement.SpaceBetween) { // Aufreihung der Elemente in TopBar
+        Row(horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) { // Aufreihung der Elemente in TopBar
             Box(
                 Modifier
                     .padding(10.dp)
@@ -40,21 +42,37 @@ fun TopBar(text: String, onClickHome: () -> Unit, onClickProfile: () -> Unit) { 
             }
             Box(
                 Modifier
-                    .padding(10.dp)
                     .requiredWidth(270.dp)
+                    .padding(start = 10.dp)
                     .fillMaxHeight(), contentAlignment = Alignment.CenterStart
             ) {
 
                 Text(text, fontSize = 24.sp) // "Goldmine" oder "Eigene Gegenstände"
             }
-            Box(
-                Modifier
-                    .padding(10.dp)
-                    .width(50.dp)
-                    .fillMaxHeight()
-                , contentAlignment = Alignment.TopEnd
 
-            ) {// Personal Page button
+            Box( // Chat Overview Button
+                Modifier
+                    .size(39.dp)
+                    //.width(40.dp)
+                  //  .padding(2.dp)
+                    .padding(top = 5.dp, end = 7.dp),
+                    //.padding(10.dp)
+                    //.fillMaxHeight()
+                // ,contentAlignment = Alignment.TopEnd
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.baseline_chat_bubble_outline_24),
+                    contentDescription = "chat_bubble",
+                    Modifier.clickable(onClick = onClickChat)
+                )
+            }
+            Box( // Personal Page button
+                Modifier
+                    .width(50.dp)
+                    .padding(end = 10.dp)
+                    //.fillMaxHeight(),
+                ,contentAlignment = Alignment.TopEnd
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.outline_account_circle_48_black),
                     contentDescription = "account_circle",

@@ -16,8 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mocogm.GGBoxes
+import com.example.mocogm.Hinweis
 import com.example.mocogm.ui.theme.MainBlue
 import com.example.mocogm.ui.theme.MainGreen
 import com.example.mocogm.ui.theme.OffBlack
@@ -25,35 +28,38 @@ import com.example.mocogm.R
 
 // Neuer Eintrag Auswahl Gesucht oder Gefunden //
 
-@Composable
-fun GesuchtGefundenTabs(onClickToGefunden: () -> Unit, onClickToGesucht: () -> Unit) {
-    Column(Modifier.fillMaxWidth()) {
-
-        ClickableBoxes(
-            onClickToGesucht, fraction = 0.5f, color = MainBlue, text = "Gesucht", iconDrawable = painterResource(id = R.drawable.lupe),
-                iconDesc = "Lupe",
-                modifier = Modifier
-                    .size(180.dp)
-                    .padding(40.dp, 20.dp, 10.dp, 0.dp)
-        )
-
-        ClickableBoxes(
-            onClickToGefunden, fraction = 1.0f, color = MainGreen, text = "Gefunden", iconDrawable = painterResource(id = R.drawable.box),
-                iconDesc = "Box",
-                modifier = Modifier
+/// Friedhof
+/*
+green box:
+modifier = Modifier
                     .size(180.dp)
                     .padding(55.dp, 20.dp, 10.dp, 0.dp)
-        )
+
+blue box:
+modifier = Modifier
+                    .size(180.dp)
+                    .padding(40.dp, 20.dp, 10.dp, 0.dp)
+
+
+
+ */
+
+@Composable
+fun GesuchtGefundenBoxen(blueBox: GGBoxes, greenBox: GGBoxes) {
+
+    Column(Modifier.fillMaxWidth()) {
+        GesuchtBox(fraction = 0.5f, blueBoxGG = blueBox)
+        GefundenBox(fraction = 1.0f, greenBoxGG = greenBox)
     }
 }
 
 
 @Composable
-fun HinweisLayout(color: Color, text: String, iconDrawable: Painter, iconDesc: String, modifier: Modifier, woGesucht: String, onClickNav: () -> Unit, buttonColor: Color) {
+fun HinweisLayout(boxGG: GGBoxes, boxHinweis: Hinweis) {
 
     Column() {
-        ClickableBoxes(color = color, fraction = 0.5f, text = text, iconDrawable = iconDrawable, iconDesc = iconDesc, modifier = modifier) // box oben mit entspr farbe etc
-        HinweisBox(woGesucht, onClickNav, buttonColor)
+        ClickableBoxes(fraction = 0.5f, boxGG) // box oben mit entspr farbe etc
+        HinweisBox(boxHinweis)
     }
 }
 
@@ -62,35 +68,41 @@ fun HinweisLayout(color: Color, text: String, iconDrawable: Painter, iconDesc: S
 
 @Composable
 fun ClickableBoxes(
-    onClickToHinweis: () -> Unit = {}, // schon initialisiert, weil wir diese Boxen wiederbenutzen wollen, wenn wir schon beim Hinweis sind.
-    color: Color,                        // somit muss das dann da nicht mehr übergeben werden
     fraction: Float,
-    text: String,
-    iconDrawable: Painter,
-    iconDesc: String,
-    modifier: Modifier
+    boxGG: GGBoxes
 ) {
     Box(
         Modifier
             .fillMaxWidth()
             .fillMaxHeight(fraction)
-            .background(color)
-            .clickable(onClick = onClickToHinweis),
+            .background(boxGG.bgColor)
+            .clickable(onClick = boxGG.onClick),
         contentAlignment = Alignment.Center
     ) {
         Column(
             modifier = Modifier
                 .padding(),
         ) {
-            Text(text, fontSize = 50.sp)
-            Image(painter = iconDrawable, contentDescription = iconDesc, modifier) // image resource etc wird übergeben
+            Text(boxGG.titleText, fontSize = 50.sp)
+            Image(painter = painterResource(id = boxGG.iconDrawableID), contentDescription = boxGG.iconDesc) // image resource etc wird übergeben
         }
     }
 }
 
 
 @Composable
-fun HinweisBox(woGesucht: String, onClickNav: () -> Unit, buttonColor: Color) {
+fun GesuchtBox(fraction: Float, blueBoxGG: GGBoxes) {
+    ClickableBoxes(fraction, blueBoxGG)
+}
+
+@Composable
+fun GefundenBox(fraction: Float, greenBoxGG: GGBoxes) {
+    ClickableBoxes(fraction, greenBoxGG)
+}
+
+
+@Composable
+fun HinweisBox(boxHinweis: Hinweis) {
 
     Column() {
         Box(
@@ -103,9 +115,9 @@ fun HinweisBox(woGesucht: String, onClickNav: () -> Unit, buttonColor: Color) {
         }
 
         Column(Modifier.padding(30.dp, 0.dp)) {
-            HinweisText(woGesucht)
-            HinweisBestaetigung(woGesucht)
-            ButtonSucheBeginnen(onClickNav, buttonColor)
+            HinweisText(boxHinweis.woGesucht)
+            HinweisBestaetigung(boxHinweis.woGesucht)
+            ButtonSucheBeginnen(boxHinweis.onClickButton, boxHinweis.buttonColor)
         }
     }
 }
@@ -125,16 +137,19 @@ fun HinweisText(woGesucht: String) {
     }
 }
 
+@Preview
 @Composable
-fun HinweisBestaetigung(woSchonGesucht: String) {
+fun HinweisBestaetigung(woGesucht: String = "") {
 
     Row {
+        var isButtonEnabled: Boolean = false
         val checkedStateJava = remember { mutableStateOf(false) }
-
         Checkbox(
             checked = checkedStateJava.value,
-            onCheckedChange = { checkedStateJava.value = it },
-
+            onCheckedChange = {
+                checkedStateJava.value = it
+                isButtonEnabled = !isButtonEnabled // changes value to what it wasn't before (true or false)
+                              },
         )
         Box(
             Modifier
@@ -143,7 +158,7 @@ fun HinweisBestaetigung(woSchonGesucht: String) {
                 .padding(10.dp, 0.dp, 30.dp, 0.dp),
         ) {
             Text(
-                "Ich habe bereits unter “${woSchonGesucht}” nach diesem Gegenstand gesucht, habe ihn dort aber leider nicht gefunden.",
+                "Ich habe bereits unter “${woGesucht}” nach diesem Gegenstand gesucht, habe ihn dort aber leider nicht gefunden.",
                 fontSize = 15.sp
             )
         }
