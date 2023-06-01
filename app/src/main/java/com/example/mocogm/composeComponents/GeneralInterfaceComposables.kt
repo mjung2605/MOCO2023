@@ -17,10 +17,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mocogm.ui.theme.*
 import com.example.mocogm.R
+import com.example.mocogm.gebuendelteDaten.MainLayout
+import com.example.mocogm.gebuendelteDaten.MainUserInterface
 
-@Preview
+
 @Composable
-fun TopBar(text: String = "GoldMine", onClickHome: () -> Unit = {}, onClickChat: () -> Unit = {}, onClickProfile: () -> Unit = {})  { // Text ist davon abhängig ob wir gerade auf der Main Page oder der Personal Page sind
+fun TopBar(titleText: String, layoutData: MainUserInterface)  { // Text ist davon abhängig ob wir gerade auf der Main Page oder der Personal Page sind
     Box(
         Modifier
             .fillMaxWidth()
@@ -33,7 +35,7 @@ fun TopBar(text: String = "GoldMine", onClickHome: () -> Unit = {}, onClickChat:
                     .padding(10.dp)
                     .width(35.dp)
                     .fillMaxHeight()
-                    .clickable(onClick = onClickHome)
+                    .clickable(onClick = layoutData.onClickHome)
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.goldmine_2_3x_quadrat),
@@ -47,7 +49,7 @@ fun TopBar(text: String = "GoldMine", onClickHome: () -> Unit = {}, onClickChat:
                     .fillMaxHeight(), contentAlignment = Alignment.CenterStart
             ) {
 
-                Text(text, fontSize = 24.sp) // "Goldmine" oder "Eigene Gegenstände"
+                Text(titleText, fontSize = 24.sp) // "Goldmine" oder "Eigene Gegenstände"
             }
 
             Box( // Chat Overview Button
@@ -63,7 +65,7 @@ fun TopBar(text: String = "GoldMine", onClickHome: () -> Unit = {}, onClickChat:
                 Image(
                     painter = painterResource(id = R.drawable.baseline_chat_bubble_outline_24),
                     contentDescription = "chat_bubble",
-                    Modifier.clickable(onClick = onClickChat)
+                    Modifier.clickable(onClick = layoutData.onClickChat)
                 )
             }
             Box( // Personal Page button
@@ -76,7 +78,7 @@ fun TopBar(text: String = "GoldMine", onClickHome: () -> Unit = {}, onClickChat:
                 Image(
                     painter = painterResource(id = R.drawable.outline_account_circle_48_black),
                     contentDescription = "account_circle",
-                    Modifier.clickable(onClick = onClickProfile)
+                    Modifier.clickable(onClick = layoutData.onClickPersonal)
                 )
             }
         }
@@ -84,7 +86,7 @@ fun TopBar(text: String = "GoldMine", onClickHome: () -> Unit = {}, onClickChat:
 }
 
 @Composable
-fun BottomBar(onClickAddEntry: () -> Unit) {
+fun BottomBar(layoutData: MainUserInterface) {
     Box(
         Modifier
             .fillMaxWidth()
@@ -99,7 +101,7 @@ fun BottomBar(onClickAddEntry: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            AddEntryButton(onClickAddEntry)
+            AddEntryButton(layoutData.onClickAddEntry)
         }
     }
 }

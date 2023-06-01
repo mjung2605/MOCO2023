@@ -5,84 +5,64 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.mocogm.models.AuthState
+import com.example.mocogm.models.UserRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
-////////// VIEW MODEL FOR LOGIN / AUTHENTIFICATION ///////////
 
-sealed class AuthState {
-    object AuthIdle: AuthState()
-    object AuthLoading: AuthState()
-    object AuthSuccess: AuthState()
-    class AuthError(val errorMessage: String? = null): AuthState()
-}
-
-class AuthViewModel: ViewModel() {
+class AuthViewModel(private val userRepo: UserRepository): ViewModel() {
 
     private val _authState by lazy { MutableLiveData<AuthState>() }
     val authState: LiveData<AuthState> = _authState
 
-    // guckt ob die eingegebene email einem email-Pattern entspricht
-    fun isEmailValid(email: String) = Regex("^([A-Za-z0-9_.-])+@([A-Za-z0-9_-])+\\.([A-Za-z]{2,})$").matches(email)
+    fun signUpWithEmail(
+        email: String,
+        password: String,
+        pwConfirm: String
+    ) {
 
-
-    fun onLogIn(email: String, password: String) {
-
-        if (!isEmailValid(email)) {
-            _authState.value = AuthState.AuthError("Invalid email")
+        if (!userRepo.isEmailValid(email)) {
+            _authState.value = AuthState.AuthError("Invalide E-Mail")
             return
         }
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.i(TAG, "Einloggen erfolgreich")
-                    _authState.value = AuthState.AuthSuccess
-                }
-                else {
-                    task.exception?.let {
-                        Log.i(TAG, "Einloggen fehlgeschlagen mit Fehler ${it.localizedMessage}")
-                        _authState.value = AuthState.AuthError(it.localizedMessage)
-                    }
-                }
+        if(!userRepo.isPasswordLongEnough(password)) {
+            _authState.value = AuthState.AuthError("Passwort ist zu kurz")
+            return
         }
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-            email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.i(TAG,"Accounterstellung erfolgreich")
-                    _authState.value = AuthState.AuthSuccess
-                } else {
-                    task.exception?.let {
-                        Log.i(TAG,"Accounterstellung fehlgeschlagen mit Fehler ${it.localizedMessage}")
-                        _authState.value = AuthState.AuthError(it.localizedMessage)
-                    }
-                }
-            }
+        if(!userRepo.doesPasswordContainNumber(password)) {
+            _authState.value = AuthState.AuthError("Passwort muss mindestens eine Zahl enthalten")
+            return
+        }
+        if(!userRepo.doPWsMatch(password, pwConfirm)) {
+            _authState.value = AuthState.AuthError("Passwörter stimmen nicht überein")
+            return
+        }
+        userRepo.signUpWithEmail(email, password)
+        when(userRepo.loginResult.value) {
+            is AuthState.AuthError -> _authState.value = AuthState.AuthError(errorMessage = "Fehler beim Einloggen")
+            is AuthState.AuthSuccess -> _authState.value = AuthState.AuthSuccess
+            AuthState.AuthIdle -> _authState.value = AuthState.AuthIdle
+            AuthState.AuthLoading -> _authState.value = AuthState.AuthLoading
+
+            else -> {}
+        }
     }
 
-    fun onSignIn(email: String, password: String, confirmPassword: String) {
+    fun logInWithEmail (email: String, password: String) {
+        if (!userRepo.isEmailValid(email)) {
+            _authState.value = AuthState.AuthError("Invalide E-Mail")
+            return
+        }
 
-        if (!isEmailValid(email)) {
-            _authState.value = AuthState.AuthError("Invalid email")
-            return
+        userRepo.logInWithEmail(email, password)
+        when(userRepo.loginResult.value) {
+            is AuthState.AuthError -> _authState.value = AuthState.AuthError(errorMessage = "Fehler beim Einloggen")
+            is AuthState.AuthSuccess -> _authState.value = AuthState.AuthSuccess
+            AuthState.AuthIdle -> _authState.value = AuthState.AuthIdle
+            AuthState.AuthLoading -> _authState.value = AuthState.AuthLoading
+
+            else -> {}
         }
-        if (password != confirmPassword) {
-            _authState.value = AuthState.AuthError("Password does not match")
-            return
-        }
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(
-            email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.i(TAG,"Email signup is successful")
-                    _authState.value = AuthState.AuthSuccess
-                } else {
-                    task.exception?.let {
-                        Log.i(TAG,"Email signup failed with error ${it.localizedMessage}")
-                        _authState.value = AuthState.AuthError(it.localizedMessage)
-                    }
-                }
-            }
     }
-
-
 }

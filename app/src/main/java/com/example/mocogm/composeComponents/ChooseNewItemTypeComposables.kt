@@ -19,12 +19,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mocogm.GGBoxes
-import com.example.mocogm.Hinweis
-import com.example.mocogm.ui.theme.MainBlue
-import com.example.mocogm.ui.theme.MainGreen
 import com.example.mocogm.ui.theme.OffBlack
-import com.example.mocogm.R
+
+import com.example.mocogm.gebuendelteDaten.GGBoxes
+import com.example.mocogm.gebuendelteDaten.Hinweis
 
 // Neuer Eintrag Auswahl Gesucht oder Gefunden //
 

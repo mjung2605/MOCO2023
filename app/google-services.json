@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "473846066989",
+    "project_id": "mocogm",
+    "storage_bucket": "mocogm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473846066989:android:a505bbb33a650dc919ada4",
+        "android_client_info": {
+          "package_name": "com.example.mocogm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjtOmNf-us638Us8TB-ve6i2Y9ErnLTLA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

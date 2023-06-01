@@ -1,9 +1,5 @@
 package com.example.mocogm.composeComponents
 
-import android.content.ContentValues.TAG
-import android.nfc.Tag
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,7 +11,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -24,12 +19,16 @@ import androidx.compose.ui.unit.sp
 import com.example.mocogm.ui.theme.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.mocogm.viewmodels.AuthState
+import com.example.mocogm.models.AuthState
 import com.example.mocogm.viewmodels.AuthViewModel
 import androidx.lifecycle.*
 import com.example.mocogm.*
 import com.example.mocogm.R
+import com.example.mocogm.gebuendelteDaten.LogSignType
+import com.example.mocogm.gebuendelteDaten.StartLogIn
+import com.example.mocogm.gebuendelteDaten.StartSignUp
+import com.example.mocogm.gebuendelteDaten.StartTitle
+import com.example.mocogm.models.UserRepository
 
 
 // einfach composable type übergeben
@@ -106,6 +105,7 @@ fun LogInSignUpScreen(type: LogSignType, viewModel: AuthViewModel) {
     var nutzerValue by rememberSaveable { mutableStateOf("") }
     var pwConfirmValue by rememberSaveable { mutableStateOf("") }
 
+
     Box( // Hintergrund
         Modifier
             .background(brush = Brush.verticalGradient(listOf(MainBlue, MainGreen)))
@@ -131,9 +131,9 @@ fun LogInSignUpScreen(type: LogSignType, viewModel: AuthViewModel) {
                 onPwConfirmChange = { newValue: String -> pwConfirmValue = newValue } )
 
             LogSignButtonAction(type, performLogSignIn = {
-                if(type is StartLogIn) viewModel.onLogIn(emailValue, passwordValue)
-                else if(type is StartSignUp) viewModel.onSignIn(emailValue, passwordValue, pwConfirmValue)
-            })
+                if(type is StartLogIn) viewModel.logInWithEmail(emailValue, passwordValue)
+                else if(type is StartSignUp) viewModel.signUpWithEmail(emailValue, passwordValue, pwConfirmValue)
+        })
         }
     }
 }
@@ -234,7 +234,10 @@ fun LogSignButtonAction(
         // performs login/signup
         Box(Modifier.padding(10.dp)) {
             Button(
-                onClick = type.onClickNavigate,
+                onClick = {
+                    performLogSignIn
+                    type.onClickNavigate
+                          },
                 colors = ButtonDefaults.buttonColors(backgroundColor = type.buttonColor)
             ) {
                 Text(text = type.buttonText)

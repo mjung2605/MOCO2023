@@ -9,16 +9,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mocogm.gebuendelteDaten.MainUserInterface
 import com.example.mocogm.ui.theme.MainBlue
 import com.example.mocogm.ui.theme.MainGreen
 import com.example.mocogm.ui.theme.OffBlack
 
 @Composable
-fun PrivateChat(onClickHome: () -> Unit, onClickProfile: () -> Unit, onClickAddEntry: () -> Unit) {
+fun PrivateChat(layoutData: MainUserInterface, otherUsername: String) {
     Column() {
-        TopBar(text = "[username]", onClickHome, onClickProfile)
+        TopBar(titleText = otherUsername,  layoutData)
         PrivateChatLayout(true, "hi")
-        BottomBar(onClickAddEntry)
+        BottomBar(layoutData)
     }
 }
 

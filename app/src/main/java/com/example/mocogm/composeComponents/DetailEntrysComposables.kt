@@ -22,31 +22,19 @@ import com.example.mocogm.ui.theme.LightGray
 import com.example.mocogm.ui.theme.OffBlack
 import com.example.mocogm.ui.theme.OffWhite
 import com.example.mocogm.R
-
+import com.example.mocogm.gebuendelteDaten.DetailedEntry
 
 @Composable
-fun DetailedEntry(
-    titel: String,
-    color: Color,
-    onClickAction: () -> Unit,
-    buttonText: String,
-    iconDrawable: Painter,
-    iconDesc: String
-) {
-    DetailedEntryContent(titel)
+fun DetailedEntry(layoutData: DetailedEntry) {
+
+    DetailedEntryContent(titel = "Platzhaltertitel")
 
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
         Box( // container für button
             Modifier.padding(bottom = 20.dp),
             contentAlignment = Alignment.Center
         ) {
-            ButtonDeleteOrMessage(
-                color,
-                onClickAction,
-                buttonText,
-                iconDrawable,
-                iconDesc
-            )
+            ButtonDeleteOrMessage(layoutData)
         }
     }
 }
@@ -55,31 +43,25 @@ fun DetailedEntry(
 // Button auf persönlicher Seite: man kann eigene Einträge löschen
 // noch hinzufügen: übergabe Beschreibung, getMaps, getPicture
 @Composable
-fun ButtonDeleteOrMessage(
-    color: Color,
-    onClickAction: () -> Unit,
-    buttonText: String,
-    iconDrawable: Painter,
-    iconDesc: String
-) {
-    Button(onClick = onClickAction,
+fun ButtonDeleteOrMessage(layoutData: DetailedEntry) {
+    Button(onClick = layoutData.onClickAction,
         modifier = Modifier
             .width(width = 260.dp)
             .height(height = 74.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = color)
+        colors = ButtonDefaults.buttonColors(backgroundColor = layoutData.buttonColor)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
-                iconDrawable,
-                iconDesc,
+                painterResource(id = layoutData.iconDrawableID),
+                layoutData.iconDesc,
                 modifier = Modifier
                     .size(30.dp)
                     .padding(top = 5.dp)
             )
             Spacer(Modifier.padding(start = 10.dp))
             Text(
-                text = buttonText,
+                text = layoutData.buttonText,
                 style = TextStyle(
                     fontSize = 20.sp,
                     color = OffBlack

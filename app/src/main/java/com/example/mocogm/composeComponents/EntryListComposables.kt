@@ -11,6 +11,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.mocogm.R
+import com.example.mocogm.gebuendelteDaten.MainLayout
+import com.example.mocogm.gebuendelteDaten.MainUserInterface
+import com.example.mocogm.gebuendelteDaten.PersonalTabs
 import com.example.mocogm.ui.theme.MainBlue
 import com.example.mocogm.ui.theme.MainGreen
 
@@ -22,93 +25,32 @@ fun ListOfEntrys() {
 }
 
 @Composable
-fun EntryList(topText: String,
-              onClickHome: () -> Unit, onClickProfile: () -> Unit,
-              onClickBlue: () -> Unit, onClickGreen: () -> Unit,
-              onClickAddEntry: () -> Unit,
-    // these following parameters are for listentrylayout
-              colorBorder: Color, entryTitle: String, description: String, onClickDetailEntry: () -> Unit, isPersonal: Boolean, onClickDelete: () -> Unit = {}
-) {
+fun EntryList(mainLayoutData: MainUserInterface) {
     Column() {
-        TopBar(topText, onClickHome, onClickProfile)
-        MainTabs(onClickBlue, onClickGreen)
-        ListOfEntrysLayout(
-            colorBorder,
-            entryTitle,
-            description,
-            onClickDetailEntry,
-            isPersonal,
-            onClickDelete
-        )
-        BottomBar(onClickAddEntry)
+        TopBar(mainLayoutData.pageTitle, mainLayoutData)
+        MainTabs(mainLayoutData)
+        ListOfEntrysLayout(mainLayoutData)
+        BottomBar(mainLayoutData)
     }
 }
 
 // alles die gleichen Einträge für Visualisierung. später mit MVVM Implementierung mit observern etc
 @Composable
-fun ListOfEntrysLayout(colorBorder: Color, entryTitle: String, description: String, onClickDetailEntry: () -> Unit, isPersonal: Boolean, onClickDelete: () -> Unit = {}) {
+fun ListOfEntrysLayout(layoutData: MainUserInterface) {
     Column(
         Modifier
             .fillMaxSize()
             .padding(bottom = 70.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        ListEntryLayout(
-            colorBorder,
-            entryTitle,
-            description,
-            onClickDetailEntry,
-            isPersonal, onClickDelete
-        )
-        ListEntryLayout(
-            colorBorder,
-            entryTitle,
-            description,
-            onClickDetailEntry,
-            isPersonal, onClickDelete
-        )
-        ListEntryLayout(
-            colorBorder,
-            entryTitle,
-            description,
-            onClickDetailEntry,
-            isPersonal, onClickDelete
-        )
-        ListEntryLayout(
-            colorBorder,
-            entryTitle,
-            description,
-            onClickDetailEntry,
-            isPersonal, onClickDelete
-        )
-        ListEntryLayout(
-            colorBorder,
-            entryTitle,
-            description,
-            onClickDetailEntry,
-            isPersonal, onClickDelete
-        )
-        ListEntryLayout(
-            colorBorder,
-            entryTitle,
-            description,
-            onClickDetailEntry,
-            isPersonal, onClickDelete
-        )
-        ListEntryLayout(
-            colorBorder,
-            entryTitle,
-            description,
-            onClickDetailEntry,
-            isPersonal, onClickDelete
-        )
-        ListEntryLayout(
-            colorBorder,
-            entryTitle,
-            description,
-            onClickDetailEntry,
-            isPersonal, onClickDelete
-        )
+        ListEntryLayout(layoutData)
+        ListEntryLayout(layoutData)
+        ListEntryLayout(layoutData)
+        ListEntryLayout(layoutData)
+        ListEntryLayout(layoutData)
+        ListEntryLayout(layoutData)
+        ListEntryLayout(layoutData)
+        ListEntryLayout(layoutData)
     }
 }
 
@@ -116,52 +58,46 @@ fun ListOfEntrysLayout(colorBorder: Color, entryTitle: String, description: Stri
 
 // Screen: Main Page
 @Composable
-fun MainTabs(onClickBlue: () -> Unit, onClickGreen: () -> Unit) {
+fun MainTabs(mainLayoutData: MainUserInterface) {
 
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         // Gesucht Box
-        TabBox(text = "Gesucht", color = MainBlue, onClickAction = onClickBlue, fraction = 0.5f)
+        TabBox( { mainLayoutData.onClickTabBlue }, MainBlue, fraction = 0.5f)
         // Gefunden Box
-        TabBox(text = "Gefunden", color = MainGreen, onClickAction = onClickGreen, fraction = 1.0f)
+        TabBox( { mainLayoutData.onClickTabGreen }, MainGreen, fraction = 1.0f)
     }
 }
 
 @Composable
-fun TabBox(text: String, color: Color, onClickAction: () -> Unit, fraction: Float) { // fraction ist wichtig für das Alignment (split in middle)
+fun TabBox(onClick: () -> Unit, boxColor: Color, fraction: Float) { // fraction ist wichtig für das Alignment (split in middle)
 
     Box(
         Modifier
             .fillMaxWidth(fraction) // 1 Tab ist die halbe Breite lang
             .height(50.dp)
-            .background(color)
-            .clickable(onClick = onClickAction),
+            .background(boxColor)
+            .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
 
     ) {
-        Text(text)
+        Text(
+            if(boxColor == MainGreen) "Gefunden" else "Gesucht"
+        )
     }
-
 }
 
 @Composable
-fun ListEntryLayout( // Ein Eintrag in der Liste
-    colorBorder: Color,
-    entryTitle: String,
-    description: String,
-    onClickDetailEntry: () -> Unit,
-    isPersonal: Boolean,
-    onClickDelete: () -> Unit = {} // muss nicht da sein, deswegen hier vorinitialisiert
-) {
+fun ListEntryLayout(mainLayoutData: MainUserInterface) {
     Box(
         Modifier
             .padding(top = 20.dp, start = 20.dp, end = 20.dp, bottom = 10.dp)
             .fillMaxWidth()
             .height(90.dp)
-            .clickable(onClick = onClickDetailEntry)
+            .clickable(onClick = {} ) // TODO("Go to Detailed Entry")
     ) {
         Row {
-            ListPreviewPicture(colorBorder)
-            ListEntryTextContent(entryTitle, description, isPersonal, onClickDelete)
+            ListPreviewPicture(mainLayoutData.colorBorder)
+            ListEntryTextContent(mainLayoutData, "Titel", "Beschreibung")
         }
     }
 }
@@ -186,7 +122,7 @@ fun ListPreviewPicture(colorBorder: Color) {
 }
 
 @Composable
-fun ListEntryTextContent(entryTitle: String, description: String, isPersonal: Boolean, onClickDelete: () -> Unit) {
+fun ListEntryTextContent(mainLayoutData: MainLayout, entryTitle: String, description: String) {
     Column(Modifier.padding(start = 12.dp)) { // Titel + Text
         Box(
             Modifier
@@ -205,8 +141,8 @@ fun ListEntryTextContent(entryTitle: String, description: String, isPersonal: Bo
                     Box(Modifier.padding(end=30.dp)) {
                         Text(text = description.take(70) + "...")
                     }
-                    if(isPersonal) { // add delete Button
-                        ListEntryDelete(onClickDelete)
+                    if(mainLayoutData is PersonalTabs) { // add delete Button
+                        ListEntryDelete(mainLayoutData.onClickDelete)
                     }
                 }
             }

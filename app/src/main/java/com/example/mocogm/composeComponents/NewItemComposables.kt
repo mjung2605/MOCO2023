@@ -16,35 +16,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mocogm.R
+import com.example.mocogm.gebuendelteDaten.NewItem
 import com.example.mocogm.ui.theme.*
 
 @Composable
-fun NewItem(
-    color: Color,
-    iconDrawable: Painter,
-    iconDesc: String,
-    text: String,
-    onClickNav: () -> Unit
-) {
+fun NewItem(layoutData: NewItem) {
     Column() {
-        NewItemHeader(color, iconDrawable, iconDesc, text)
-        ContentEingaben(onClickNav, color)
+        NewItemHeader(layoutData)
+        ContentEingaben(layoutData)
     }
 }
 
 @Composable
-fun NewItemHeader(
-    color: Color,
-    iconDrawable: Painter,
-    iconDesc: String,
-    text: String
-) { // zeigt, ob wir gerade ein gesuchtes oder ein gefundenes Item eintragen
+fun NewItemHeader(layoutData: NewItem) { // zeigt, ob wir gerade ein gesuchtes oder ein gefundenes Item eintragen
 
     Box(                    // Gesucht-Box mit Lupe
         modifier = Modifier
             .fillMaxWidth()
             .height(144.dp)
-            .background(color),
+            .background(layoutData.color),
         contentAlignment = Alignment.Center
     ) {
         Row(
@@ -55,12 +45,12 @@ fun NewItemHeader(
         ) {
 
             Image(
-                painter = iconDrawable, contentDescription = iconDesc, modifier = Modifier
+                painter = painterResource(id = layoutData.iconDrawableID), contentDescription = layoutData.iconDesc, modifier = Modifier
                     .size(size = 63.dp)
             )
 
             Text(
-                text = text,
+                text = layoutData.typeTitle,
                 color = OffBlack,
                 style = TextStyle(
                     fontSize = 45.sp
@@ -75,7 +65,7 @@ fun NewItemHeader(
 }
 
 @Composable
-fun ContentEingaben(onClickNav: () -> Unit, color: Color) {
+fun ContentEingaben(layoutData: NewItem) {
     Column {
         Box(
             modifier = Modifier
@@ -93,7 +83,7 @@ fun ContentEingaben(onClickNav: () -> Unit, color: Color) {
                 AddDesc()
                 AddLocation()
                 AddLocationDesc()
-                ButtonFinishEntry(onClickNav, color)
+                ButtonFinishEntry(layoutData.onClickAdd, layoutData.color)
             }
         }
     }
