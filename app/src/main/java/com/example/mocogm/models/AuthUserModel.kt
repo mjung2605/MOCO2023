@@ -17,7 +17,7 @@ sealed class AuthState {
     class AuthError(val errorMessage: String? = null) : AuthState()
 }
 
-data class User(val email: String, val password: String)
+//data class User(val email: String, val password: String)
 
 
 class UserRepository {

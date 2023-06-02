@@ -59,21 +59,23 @@ interface ComposableType
 class MainActivity : ComponentActivity() {
 
     private val authViewModel: AuthViewModel by viewModels()
+    private val addItemViewModel: AddItemViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MOCOGMTheme() {
                 val navController = rememberNavController()
-                NavApplicationHost(navController, authViewModel)
+                NavApplicationHost(navController, authViewModel, addItemViewModel)
             }
         }
     }
 }
 
 // Composable to store NavHost
+//Angi: hinzugefügt NavApplicationHost ( addItemViewModel: AddItemViewModel)
 @Composable
-fun NavApplicationHost(navController: NavHostController, authViewModel: AuthViewModel) {
+fun NavApplicationHost(navController: NavHostController, authViewModel: AuthViewModel, addItemViewModel: AddItemViewModel) {
 
     // Datenbündel
 
@@ -130,11 +132,18 @@ fun NavApplicationHost(navController: NavHostController, authViewModel: AuthView
         }
 
         composable(Screen.NeuesItemBlue.route) {
-            NewItem(NewItemGesucht(navController))
+            NewItem(
+                type = NewItemGesucht(navController),
+                viewModel = addItemViewModel
+
+            )
         }
 
         composable(Screen.NeuesItemGreen.route) {
-            NewItem(NewItemGefunden(navController))
+            NewItem(
+                type = NewItemGefunden(navController),
+                viewModel = addItemViewModel
+            )
         }
 
         // for show: Detailed Entry von der MainPageBlue

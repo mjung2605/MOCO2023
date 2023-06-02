@@ -5,9 +5,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 
-enum class Type {
+/*enum class Type {
     GESUCHT, GEFUNDEN
-}
+}*/
 
 class RepoPlaceholder() {
 
@@ -15,6 +15,6 @@ class RepoPlaceholder() {
 
 }
 
-sealed class User(val email: String? = null, val password: String? = null)
+ class User(val email: String? = null, val password: String? = null)
 
 
