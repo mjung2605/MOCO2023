@@ -4,6 +4,7 @@ import android.media.Image
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
+
 enum class Type{
     GESUCHT, GEFUNDEN
 }
@@ -29,7 +30,6 @@ data class ItemModel(override var type: Type,
 ): Item
 
 class ItemRepo() {
-
     //Item ID geben und der DB hinzufügen. ID wird returned
     fun addItem(item: Item): String {
         val database: FirebaseDatabase = FirebaseDatabase.getInstance() //gibt eine Instanz der Firebase-Datenbank zurück.

@@ -1,5 +1,6 @@
 package com.example.mocogm.composeComponents
 
+import androidx.appcompat.view.menu.MenuView.ItemView
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -15,20 +16,25 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mocogm.ComposableType
 import com.example.mocogm.R
 import com.example.mocogm.gebuendelteDaten.NewItem
 import com.example.mocogm.ui.theme.*
+import com.example.mocogm.viewmodels.AddItemViewModel
+
+
 
 @Composable
-fun NewItem(layoutData: NewItem) {
+fun NewItem(layoutData: NewItem, viewModel: AddItemViewModel, type: ComposableType) {
     Column() {
-        NewItemHeader(layoutData)
-        ContentEingaben(layoutData)
+        NewItemHeader(layoutData, viewModel)
+        ContentEingaben(layoutData, viewModel)
     }
 }
 
 @Composable
-fun NewItemHeader(layoutData: NewItem) { // zeigt, ob wir gerade ein gesuchtes oder ein gefundenes Item eintragen
+fun NewItemHeader(layoutData: NewItem, viewModel: AddItemViewModel) { // zeigt, ob wir gerade ein gesuchtes oder ein gefundenes Item eintragen
+
 
     Box(                    // Gesucht-Box mit Lupe
         modifier = Modifier
@@ -65,7 +71,7 @@ fun NewItemHeader(layoutData: NewItem) { // zeigt, ob wir gerade ein gesuchtes o
 }
 
 @Composable
-fun ContentEingaben(layoutData: NewItem) {
+fun ContentEingaben(layoutData: NewItem, viewModel: AddItemViewModel) {
     Column {
         Box(
             modifier = Modifier
