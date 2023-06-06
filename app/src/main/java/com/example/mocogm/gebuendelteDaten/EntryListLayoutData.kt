@@ -3,6 +3,7 @@ package com.example.mocogm.gebuendelteDaten
 import androidx.navigation.NavHostController
 import com.example.mocogm.ComposableType
 import com.example.mocogm.Screen
+import com.example.mocogm.models.Item
 import com.example.mocogm.ui.theme.MainBlue
 import com.example.mocogm.ui.theme.MainGreen
 
@@ -20,7 +21,8 @@ abstract class MainUserInterface(private val navController: NavHostController): 
     val onClickChat: () -> Unit = { navController.navigate(Screen.PrivateChat.route) }
 
 
-    val onClickDetailEntry: () -> Unit = TODO("Wie lösen? Wie wissen wir, auf welchen Eintrag geklickt wurde bzw. bekommen die ID davon?")
+    val onClickDetailEntry: (String) -> Unit = { it ->
+        navController.navigate(Screen.DetailedEntry.getDetailScreenRoute(it)) }
 
     abstract val onClickTabGreen: () -> Unit // andere implementierung, je nachdem, ob wir auf main oder personal sind
     abstract val onClickTabBlue: () -> Unit
@@ -42,7 +44,7 @@ abstract class PersonalTabs(private val navController: NavHostController): MainU
 
     val onClickDelete: () -> Unit = {
 
-        // TODO: delete entry from database
+        // TODO: delete entry from database: soll in composable gelöst werden
         navController.navigate(navController.currentBackStackEntry!!.id) // geht zurück?
 
     }

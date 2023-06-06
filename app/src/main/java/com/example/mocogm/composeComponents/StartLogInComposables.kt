@@ -3,6 +3,8 @@ package com.example.mocogm.composeComponents
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -46,7 +48,7 @@ fun StartScreen(
 ) {
 
     // viewModel wird hier observed
-    val loginState by viewModel.authState.observeAsState(initial = AuthState.AuthIdle)
+
 
     Box( // Hintergrund-Gradient
         Modifier
@@ -60,25 +62,8 @@ fun StartScreen(
         contentAlignment = Alignment.Center
     ) {
         // geht entweder zu titleScreen, einem Login/signUp Screen, oder displayed loading
-
-        when(loginState) {
-            is AuthState.AuthError -> {
-                Box { (loginState as AuthState.AuthError).errorMessage?.let { Text(it) } }
-            }
-            AuthState.AuthIdle -> {
-                if (type is StartTitle) TitleScreen(type)
-                else if (loginState == AuthState.AuthIdle) LogInSignUpScreen(type as LogSignType, viewModel)
-            }
-            AuthState.AuthLoading -> {
-                Box() {
-                    CircularProgressIndicator(color = SecondaryBlue)
-                }
-            }
-            AuthState.AuthSuccess -> {
-                // TODO: get logged in user?
-                (type as LogSignType).onClickNavigate // for now only navigates to blue main tabs
-            }
-        }
+        if (type is StartTitle) TitleScreen(type)
+        else LogInSignUpScreen(type as LogSignType, viewModel)
     }
 }
 
@@ -102,9 +87,9 @@ fun LogInSignUpScreen(type: LogSignType, viewModel: AuthViewModel) {
 
     var emailValue by rememberSaveable { mutableStateOf("") }
     var passwordValue by rememberSaveable { mutableStateOf("") }
-    var nutzerValue by rememberSaveable { mutableStateOf("") }
     var pwConfirmValue by rememberSaveable { mutableStateOf("") }
 
+    val loginState by viewModel.authState.observeAsState(initial = AuthState.AuthIdle)
 
     Box( // Hintergrund
         Modifier
@@ -125,17 +110,36 @@ fun LogInSignUpScreen(type: LogSignType, viewModel: AuthViewModel) {
                 onEmailChange = { newValue: String -> emailValue = newValue },
                 passwordValue,
                 onPasswordChange = { newValue: String -> passwordValue = newValue },
-                nutzerValue,
-                onNutzerChange = { newValue: String -> nutzerValue = newValue },
                 pwConfirmValue,
                 onPwConfirmChange = { newValue: String -> pwConfirmValue = newValue } )
 
-            LogSignButtonAction(type, performLogSignIn = {
+            LogSignButtonAction(type, performLogSignIn =
+            {
                 if(type is StartLogIn) viewModel.logInWithEmail(emailValue, passwordValue)
-                else if(type is StartSignUp) viewModel.signUpWithEmail(emailValue, passwordValue, pwConfirmValue)
-        })
+                else viewModel.signUpWithEmail(emailValue, passwordValue, pwConfirmValue)
+            }, type.onClickNavigate)
         }
     }
+
+
+    when(loginState) {
+
+        is AuthState.AuthError -> {
+            Box { (loginState as AuthState.AuthError).errorMessage?.let { Text(it) } }
+        }
+
+        AuthState.AuthLoading -> {
+            Box() {
+                CircularProgressIndicator(color = SecondaryBlue)
+            }
+        }
+        AuthState.AuthSuccess -> {
+            // TODO: get logged in user?
+            (type).onClickNavigate // for now only navigates to blue main tabs
+        }
+        else -> { } // authidle -> do nothing
+    }
+
 }
 
 @Composable
@@ -145,8 +149,6 @@ fun LogSignTextFields(
     onEmailChange: (String) -> Unit,
     passwordValue: String,
     onPasswordChange: (String) -> Unit,
-    nutzerValue: String,
-    onNutzerChange: (String) -> Unit,
     pwConfirmValue: String,
     onPwConfirmChange: (String) -> Unit
 ) {
@@ -160,27 +162,22 @@ fun LogSignTextFields(
     )
     if (type is StartLogIn) {
         // Textbox für E-Mail
-        LogSignSingleTextbox(placeholder = "E-Mail", type, emailValue, onEmailChange)
+        LogSignSingleTextbox(placeholder = "E-Mail", emailValue, onEmailChange)
 
         // Textbox für Passwort
-        LogSignSingleTextbox(placeholder = "Passwort", type, passwordValue, onPasswordChange)
+        LogSignSingleTextbox(placeholder = "Passwort", passwordValue, onPasswordChange)
 
     } else { // type is StartSignUp
 
-        // Textbox für Nutzername
-        // OutlinedTextField(value = , onValueChange = ) TODO: Bei Implementierung dies benutzen!
-        LogSignSingleTextbox(placeholder = "Nutzername", type, nutzerValue, onNutzerChange)
-
         // Textbox für E-Mail
-        LogSignSingleTextbox(placeholder = "E-Mail", type, emailValue, onEmailChange)
+        LogSignSingleTextbox(placeholder = "E-Mail", emailValue, onEmailChange)
 
         // Textbox für Passwort
-        LogSignSingleTextbox(placeholder = "Passwort", type, passwordValue, onPasswordChange)
+        LogSignSingleTextbox(placeholder = "Passwort", passwordValue, onPasswordChange)
 
         // Textbox für Passwort wiederholen
         LogSignSingleTextbox(
             placeholder = "Passwort wiederholen",
-            type,
             pwConfirmValue,
             onPwConfirmChange
         )
@@ -191,8 +188,8 @@ fun LogSignTextFields(
 @Composable
 fun LogSignSingleTextbox(
     placeholder: String,
-    type: LogSignType, textValue: String, onTextValueChange: (String) -> Unit
-) { // TODO: Umsetzung mit OutlinedTextField
+    textValue: String, onTextValueChange: (String) -> Unit
+) {
 
     OutlinedTextField(
         value = textValue,
@@ -205,29 +202,14 @@ fun LogSignSingleTextbox(
                 text = placeholder
             )
         })
-
-    /*
-    Diese Box diente als UI-Platzhalter, bevor die Textfelder mit OutlinedTextField implementiert wurden.
-    Box(
-        Modifier
-            .fillMaxWidth()
-            .height(30.dp)
-            .background(
-                Brush.horizontalGradient(listOf(OffWhite, OffWhite)),
-                alpha = 0.3f // Alpha: Deckkraft
-            )
-    ) {
-        Text(placeholder, Modifier.padding(start = 7.dp, top = 5.dp), color = DarkGray)
-    }
-
-     */
 }
 
 @Composable
 fun LogSignButtonAction(
     type: LogSignType,
     // logInState: AuthState
-    performLogSignIn: () -> Unit
+    performLogSignIn: () -> Unit,
+    onClickNav: () -> Unit
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -235,15 +217,14 @@ fun LogSignButtonAction(
         Box(Modifier.padding(10.dp)) {
             Button(
                 onClick = {
-                    performLogSignIn
-                    type.onClickNavigate
-                          },
+                    performLogSignIn()
+                    onClickNav()
+                },
                 colors = ButtonDefaults.buttonColors(backgroundColor = type.buttonColor)
             ) {
                 Text(text = type.buttonText)
             }
         }
-
         // goes to other: signup/login screen respectively
         Box(Modifier.padding(top = 20.dp), contentAlignment = Alignment.Center) {
             Column(

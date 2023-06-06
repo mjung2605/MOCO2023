@@ -18,16 +18,31 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.mocogm.ui.theme.LightGray
 import com.example.mocogm.ui.theme.OffBlack
 import com.example.mocogm.ui.theme.OffWhite
 import com.example.mocogm.R
 import com.example.mocogm.gebuendelteDaten.DetailedEntry
+import com.example.mocogm.viewmodels.ItemViewModel
+import com.google.firebase.firestore.auth.User
 
+
+// dies ist das einzige Composable der Komponenten-Composables, welches
 @Composable
-fun DetailedEntry(layoutData: DetailedEntry) {
+fun DetailedEntry(layoutData: DetailedEntry, viewModel: ItemViewModel, itemID: String) {
 
-    DetailedEntryContent(titel = "Platzhaltertitel")
+    val item = viewModel.getItem(itemID)
+
+    val titel: String = item!!.title
+    val desc: String = item.desc
+    val loc = item.loc
+    val photo = item.picture
+    val userEmail = item.user!!.email
+
+
+
+    DetailedEntryContent(titel, desc, loc, photo, userEmail!!)
 
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
         Box( // container für button
@@ -39,7 +54,7 @@ fun DetailedEntry(layoutData: DetailedEntry) {
     }
 }
 
-// Button für Eintrag auf der Main-Seite: man soll die Person, die das Objekt eingestellt hat, anschreiben können
+//
 // Button auf persönlicher Seite: man kann eigene Einträge löschen
 // noch hinzufügen: übergabe Beschreibung, getMaps, getPicture
 @Composable
@@ -71,8 +86,9 @@ fun ButtonDeleteOrMessage(layoutData: DetailedEntry) {
     }
 }
 
+//
 @Composable
-fun DetailedEntryContent(titel: String) { // noch Foto und Maps hinzufügen
+fun DetailedEntryContent(titel: String, desc: String, loc: String, photo: String, otherUserEmail: String) {
 
     Column(Modifier.background(OffWhite)) {
         Box(
@@ -83,16 +99,18 @@ fun DetailedEntryContent(titel: String) { // noch Foto und Maps hinzufügen
             Column(modifier = Modifier.verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(25.dp)
             ) {
-                Photo()
-                TitelUndBeschreibung(titel)
-                MapsUndBeschreibung()
+                Photo(photo)
+                TitelUndBeschreibung(titel, desc)
+                Maps(loc)
+                Message(otherUserEmail)
             }
         }
     }
 }
 
 @Composable
-fun Photo() {
+fun Photo(photo: String) {
+    // TODO bei Kameraimplementierung: fetch from Backend
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -107,7 +125,7 @@ fun Photo() {
 }
 
 @Composable
-fun TitelUndBeschreibung(titel: String) {
+fun TitelUndBeschreibung(titel: String, desc: String) {
     Column() {
 
         // Titel des Fundstücks
@@ -131,7 +149,7 @@ fun TitelUndBeschreibung(titel: String) {
                 .padding(start = 20.dp, end = 20.dp)
         ) {
             Text(
-                text = "So sieht der Gegenstand aus: Jorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.",
+                text = desc,
                 modifier = Modifier
                     .fillMaxWidth(),
                 color = OffBlack,
@@ -144,8 +162,9 @@ fun TitelUndBeschreibung(titel: String) {
 }
 
 @Composable
-fun MapsUndBeschreibung() {
+fun Maps(loc: String) {
 
+    // TODO bei Maps-Implementierung: fetch from Backend
     // Maps
     Box(
         modifier = Modifier
@@ -167,21 +186,24 @@ fun MapsUndBeschreibung() {
             )
         }
     }
+}
 
-    // Ortsbeschreibung
+@Composable
+fun Message(otherEmail: String) {
+
+
     Box(
         modifier = Modifier
-            .padding(start = 20.dp, end = 20.dp, bottom = 140.dp)
+            .padding(start = 20.dp, end = 20.dp)
     ) {
         Text(
-            text = "Hier habe ich den Gegenstand gefunden: Dorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.",
+            text = "Schreibe den Nutzer direkt an:\n $otherEmail",
+            modifier = Modifier
+                .fillMaxWidth(),
             color = OffBlack,
             style = TextStyle(
                 fontSize = 15.sp
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(160.dp)
+            )
         )
     }
 }

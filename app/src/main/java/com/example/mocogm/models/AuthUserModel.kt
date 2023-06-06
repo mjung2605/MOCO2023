@@ -1,5 +1,7 @@
 package com.example.mocogm.models
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.*
@@ -17,7 +19,8 @@ sealed class AuthState {
     class AuthError(val errorMessage: String? = null) : AuthState()
 }
 
-//data class User(val email: String, val password: String)
+// Brauchen wir das wenn FIrebaseUser existiert?
+//abstract class User(val email: String, val password: String): FirebaseUser()
 
 
 class UserRepository {
@@ -49,7 +52,7 @@ class UserRepository {
     }
 
     fun signUpWithEmail(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
+        auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     _loginResult.value = AuthState.AuthSuccess
@@ -59,6 +62,10 @@ class UserRepository {
                 }
             }
     }
+
+    fun currentUser(): FirebaseUser = auth.currentUser ?: throw java.lang.Exception("Kein angemeldeter Benutzer gefunden")
+
+
 }
 
 

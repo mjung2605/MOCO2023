@@ -1,31 +1,23 @@
 package com.example.mocogm
 
-import android.graphics.Color
 import android.os.Bundle
-import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import com.example.mocogm.ui.theme.*
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+
+import com.example.mocogm.Screen.DetailedEntry.getDetailScreenRoute
 //import com.example.mocogm.ComposableType.StartBlue.navController
 import com.example.mocogm.ui.theme.MOCOGMTheme
 import com.example.mocogm.composeComponents.*
 import com.example.mocogm.gebuendelteDaten.*
+
 import com.example.mocogm.viewmodels.*
 
 sealed class Screen(val route: String) {
@@ -48,10 +40,14 @@ sealed class Screen(val route: String) {
 
     object NeuesItemGreen : Screen("item_new_green")
     object NeuesItemBlue : Screen("item_new_blue")
-    object DetailedEntry : Screen("detail_entry") // TODO() ausführen in mmain/personal; blue/green?
+    object DetailedEntry : Screen(getDetailScreenRoute()) // testen ob das so funktioniert lol
     object PrivateChat : Screen("direct_message")
 
+    fun getDetailScreenRoute(itemID: String = "") = "detail_entry/$itemID"
+
 }
+
+
 
 interface ComposableType
 
@@ -59,26 +55,25 @@ interface ComposableType
 class MainActivity : ComponentActivity() {
 
     private val authViewModel: AuthViewModel by viewModels()
-    private val addItemViewModel: AddItemViewModel by viewModels()
+    private val itemViewModel: ItemViewModel by viewModels()
+    private val itemListViewModel: ItemListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MOCOGMTheme() {
                 val navController = rememberNavController()
-                NavApplicationHost(navController, authViewModel, addItemViewModel)
+                NavApplicationHost(navController, authViewModel, itemViewModel, itemListViewModel)
             }
         }
     }
 }
 
 // Composable to store NavHost
-//Angi: hinzugefügt NavApplicationHost ( addItemViewModel: AddItemViewModel)
 @Composable
-fun NavApplicationHost(navController: NavHostController, authViewModel: AuthViewModel, addItemViewModel: AddItemViewModel) {
+fun NavApplicationHost(navController: NavHostController, authViewModel: AuthViewModel, itemViewModel: ItemViewModel, itemListViewModel: ItemListViewModel) {
 
-    // Datenbündel
-
+    // TODO() wie handeln wir Zugriffe auf die bestehenden Items, also wie übergeben wir, welches Item aus der Liste angeklickt wurde?
 
     NavHost(navController = navController, startDestination = Screen.TitleScreen.route) {
         // define all possible destinations
@@ -105,19 +100,19 @@ fun NavApplicationHost(navController: NavHostController, authViewModel: AuthView
         }
 
         composable(Screen.EntryListMainBlue.route) {
-            EntryList(MainTabsBlue(navController))
+            EntryList(MainTabsBlue(navController), itemListViewModel)
         }
 
         composable(Screen.EntryListMainGreen.route) {
-            EntryList(MainTabsGreen(navController))
+            EntryList(MainTabsGreen(navController), itemListViewModel)
         }
 
         composable(Screen.EntryListPersonalBlue.route) {
-            EntryList(PersonalTabsBlue(navController))
+            EntryList(PersonalTabsBlue(navController), itemListViewModel)
         }
 
         composable(Screen.EntryListPersonalGreen.route) {
-            EntryList(PersonalTabsGreen(navController))
+            EntryList(PersonalTabsGreen(navController), itemListViewModel)
         }
 
         composable(Screen.GesuchtGefundenTabs.route) {
@@ -132,23 +127,16 @@ fun NavApplicationHost(navController: NavHostController, authViewModel: AuthView
         }
 
         composable(Screen.NeuesItemBlue.route) {
-            NewItem(
-                type = NewItemGesucht(navController),
-                viewModel = addItemViewModel
-
-            )
+            NewItem(NewItemGesucht(navController), itemViewModel, authViewModel.getCurrentlyLoggedInUser())
         }
 
         composable(Screen.NeuesItemGreen.route) {
-            NewItem(
-                type = NewItemGefunden(navController),
-                viewModel = addItemViewModel
-            )
+            NewItem(NewItemGefunden(navController), itemViewModel, authViewModel.getCurrentlyLoggedInUser())
         }
 
         // for show: Detailed Entry von der MainPageBlue
         composable(Screen.DetailedEntry.route) {
-            DetailedEntry(DetailedEntryMainBlue(navController))
+            DetailedEntry(DetailedEntryMainBlue(navController), itemViewModel, navController.currentBackStackEntry!!.arguments!!.getString("itemID")!!)
         }
 
         composable(Screen.PrivateChat.route) {
@@ -163,5 +151,5 @@ fun NavApplicationHost(navController: NavHostController, authViewModel: AuthView
 fun DefaultPreview() {
 
     val navController = rememberNavController()
-    NavApplicationHost(navController, viewModel())
+    NavApplicationHost(navController, viewModel(), viewModel(), viewModel())
 }

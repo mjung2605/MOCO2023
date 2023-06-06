@@ -11,10 +11,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 
-class AuthViewModel(private val userRepo: UserRepository): ViewModel() {
+class AuthViewModel(private val userRepo: UserRepository = UserRepository()): ViewModel() {
 
     private val _authState by lazy { MutableLiveData<AuthState>() }
     val authState: LiveData<AuthState> = _authState
+
+    init {
+        _authState.value = AuthState.AuthIdle
+    }
 
     fun signUpWithEmail(
         email: String,
@@ -56,6 +60,7 @@ class AuthViewModel(private val userRepo: UserRepository): ViewModel() {
         }
 
         userRepo.logInWithEmail(email, password)
+        // nicht schön
         when(userRepo.loginResult.value) {
             is AuthState.AuthError -> _authState.value = AuthState.AuthError(errorMessage = "Fehler beim Einloggen")
             is AuthState.AuthSuccess -> _authState.value = AuthState.AuthSuccess
@@ -64,5 +69,10 @@ class AuthViewModel(private val userRepo: UserRepository): ViewModel() {
 
             else -> {}
         }
+    }
+
+    fun getCurrentlyLoggedInUser(): FirebaseUser {
+        if (_authState.value != AuthState.AuthSuccess) throw Exception("Fehler beim Finden eines angemeldeten Benutzers auf diesem Gerät.")
+        return userRepo.currentUser()
     }
 }

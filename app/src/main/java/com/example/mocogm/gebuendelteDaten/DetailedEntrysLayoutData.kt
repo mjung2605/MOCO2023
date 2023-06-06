@@ -11,6 +11,9 @@ import com.example.mocogm.ui.theme.MainGreen
 interface DetailedEntry: ComposableType {
     // TODO() Eigenschaften des Items selbst später bei MVVM Implementierung alle mit observen des ViewModels/Models lösen
 
+
+
+
     val colorBorder: Color
 
     //
