@@ -18,7 +18,6 @@ import com.example.mocogm.ui.theme.MainGreen
 @Composable
 fun ListOfEntrys() {
 
-
 }
 
 @Composable

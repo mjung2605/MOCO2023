@@ -3,6 +3,7 @@ package com.example.mocogm.composeComponents
 import androidx.compose.runtime.Composable
 import android.content.Context
 import android.net.Uri
+import android.service.autofill.OnClickAction
 import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -38,7 +39,14 @@ import java.util.concurrent.Executor
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import androidx.compose.ui.res.vectorResource
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
+
+
+
+val database = Firebase.database
+val myRef = database.getReference("help")
 
 
 @Composable

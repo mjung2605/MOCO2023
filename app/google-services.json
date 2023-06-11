@@ -1,0 +1,105 @@
+{
+  "project_info": {
+    "project_number": "1089140486648",
+    "project_id": "goldminephotoitemstorage",
+    "storage_bucket": "goldminephotoitemstorage.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089140486648:android:b39660ebb1dfcd2491a60d",
+        "android_client_info": {
+          "package_name": "com.example.mocogm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiEq2BEKqW5UXUQ4OobtvPsF555XhXTHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089140486648:android:f58ea2d04249771a91a60d",
+        "android_client_info": {
+          "package_name": "com.example.mocogm.MainActivity"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiEq2BEKqW5UXUQ4OobtvPsF555XhXTHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089140486648:android:14a7ce90688bcd3d91a60d",
+        "android_client_info": {
+          "package_name": "com.example.mocogm.composeComponents"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiEq2BEKqW5UXUQ4OobtvPsF555XhXTHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089140486648:android:6852065c600b72fe91a60d",
+        "android_client_info": {
+          "package_name": "goldmine.database"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiEq2BEKqW5UXUQ4OobtvPsF555XhXTHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089140486648:android:34c8d087554c50d691a60d",
+        "android_client_info": {
+          "package_name": "goldmine.org.database"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiEq2BEKqW5UXUQ4OobtvPsF555XhXTHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
