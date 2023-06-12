@@ -33,7 +33,7 @@ fun NewItem(
     layoutData: NewItem,
     viewModel: ItemViewModel,
     currentUser: FirebaseUser,
-    type: Type
+
 ) {
     Column() {
         NewItemHeader(layoutData)

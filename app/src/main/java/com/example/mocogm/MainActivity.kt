@@ -126,20 +126,19 @@ fun NavApplicationHost(navController: NavHostController,  authViewModel: AuthVie
             HinweisLayout(GGesucht(navController), HinweisGesucht(navController))
         }
 
-     /*   composable(Screen.NeuesItemBlue.route) {
+        composable(Screen.NeuesItemBlue.route) {
             NewItem(
-               // type = NewItemGesucht(navController),
-               // viewModel = ItemViewModel
-
+                NewItemGesucht(navController),
+                itemViewModel, authViewModel.getCurrentlyLoggedInUser()
             )
         }
 
         composable(Screen.NeuesItemGreen.route) {
             NewItem(
-            //    type = NewItemGefunden(navController),
-              //  viewModel = ItemViewModel
+                NewItemGefunden(navController),
+                itemViewModel, authViewModel.getCurrentlyLoggedInUser()
             )
-        }*/
+        }
 
 
         // for show: Detailed Entry von der MainPageBlue

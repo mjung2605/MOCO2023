@@ -122,7 +122,7 @@ fun LogInSignUpScreen(type: LogSignType, viewModel: AuthViewModel) {
     }
 
 
-    when(loginState) {
+ /*   when(loginState) {
 
         is AuthState.AuthError -> {
             Box { (loginState as AuthState.AuthError).errorMessage?.let { Text(it) } }
@@ -138,7 +138,7 @@ fun LogInSignUpScreen(type: LogSignType, viewModel: AuthViewModel) {
             (type).onClickNavigate // for now only navigates to blue main tabs
         }
         else -> { } // authidle -> do nothing
-    }
+    }*/
 
 }
 

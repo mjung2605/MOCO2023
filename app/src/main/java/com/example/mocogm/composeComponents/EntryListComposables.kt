@@ -18,7 +18,6 @@ import com.example.mocogm.R
 import com.example.mocogm.gebuendelteDaten.MainLayout
 import com.example.mocogm.gebuendelteDaten.MainUserInterface
 import com.example.mocogm.gebuendelteDaten.PersonalTabs
-import com.example.mocogm.models.Item
 import com.example.mocogm.models.ItemModel
 import com.example.mocogm.ui.theme.LightGray
 import com.example.mocogm.ui.theme.MainBlue

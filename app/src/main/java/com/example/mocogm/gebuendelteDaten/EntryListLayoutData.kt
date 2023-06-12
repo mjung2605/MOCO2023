@@ -3,7 +3,7 @@ package com.example.mocogm.gebuendelteDaten
 import androidx.navigation.NavHostController
 import com.example.mocogm.ComposableType
 import com.example.mocogm.Screen
-import com.example.mocogm.models.Item
+
 import com.example.mocogm.ui.theme.MainBlue
 import com.example.mocogm.ui.theme.MainGreen
 
@@ -27,7 +27,7 @@ abstract class MainUserInterface(private val navController: NavHostController): 
     abstract val onClickTabGreen: () -> Unit // andere implementierung, je nachdem, ob wir auf main oder personal sind
     abstract val onClickTabBlue: () -> Unit
 
-    val onClickAddEntry: () -> Unit = {}
+    val onClickAddEntry: () -> Unit = {navController.navigate(Screen.GesuchtGefundenTabs.route)}
 }
 
 

@@ -16,26 +16,16 @@ enum class Type{
     GESUCHT, GEFUNDEN
 }
 
-interface Item {
 
-    // erstmal var, weil wir uns eine Bearbeitungsfunktion offen halten
-    var type: Type
-    var title: String
-    var desc: String
-    var picture: String
-    var loc: String
-    var user: FirebaseUser?
-    var itemId: String
-}
 
-data class ItemModel(override var type: Type,
-                     override var title: String,
-                     override var desc: String,
-                     override var picture: String, // TODO String nur als Platzhaltertyp
-                     override var loc: String,
-                     override var user: FirebaseUser?,
-                     override var itemId: String = ""
-): Item
+data class ItemModel( var type: Type,
+                      var title: String,
+                      var desc: String,
+                      var picture: String, // TODO String nur als Platzhaltertyp
+                      var loc: String,
+                      var user: FirebaseUser?,
+                      var itemId: String = ""
+)
 
 class ItemRepo() {
 
@@ -43,7 +33,7 @@ class ItemRepo() {
     // TODO() sollen wir hier eine Liste mit allen Items anlegen? (hab jetzt erstmal unten neue Klasse gemacht)
 
     //Item ID geben und der DB hinzufügen. ID wird returned
-    fun addItem(item: Item): String {
+    fun addItem(item: ItemModel): String {
         val database: FirebaseDatabase = FirebaseDatabase.getInstance() //gibt eine Instanz der Firebase-Datenbank zurück.
         val itemsRef: DatabaseReference = database.getReference("Item") // Oder "item" ???
 
@@ -53,7 +43,7 @@ class ItemRepo() {
         return newItemRef.key ?: ""  // Gibt die generierte ID des neuen Items zurück
     }
 
-    fun getItem(itemID: String): Item? {
+    fun getItem(itemID: String): ItemModel? {
         return null
     } // TODO() GET ITEM FROM DATABASE
 
