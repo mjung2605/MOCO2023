@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mocogm.R
 import com.example.mocogm.gebuendelteDaten.NewItem
-import com.example.mocogm.models.Item
+import com.example.mocogm.gebuendelteDaten.NewItemGesucht
 import com.example.mocogm.models.Type
 
 import com.example.mocogm.ui.theme.*
@@ -29,7 +29,12 @@ import com.example.mocogm.viewmodels.ItemViewModel
 import com.google.firebase.auth.FirebaseUser
 
 @Composable
-fun NewItem(layoutData: NewItem, viewModel: ItemViewModel, currentUser: FirebaseUser) {
+fun NewItem(
+    layoutData: NewItem,
+    viewModel: ItemViewModel,
+    currentUser: FirebaseUser,
+    type: Type
+) {
     Column() {
         NewItemHeader(layoutData)
         ContentEingaben(layoutData, viewModel, currentUser)

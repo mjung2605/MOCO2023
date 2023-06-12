@@ -1,7 +1,5 @@
 package com.example.mocogm.viewmodels
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
@@ -37,3 +35,4 @@ class ItemListViewModel(private val itemListModel: ItemListRepo = ItemListRepo()
     }
 
 }
+

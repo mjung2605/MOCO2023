@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mocogm.ui.theme.*
 import com.example.mocogm.R
+import com.example.mocogm.Screen
 import com.example.mocogm.gebuendelteDaten.MainLayout
 import com.example.mocogm.gebuendelteDaten.MainUserInterface
 
@@ -102,6 +103,7 @@ fun BottomBar(layoutData: MainUserInterface) {
             verticalArrangement = Arrangement.Top
         ) {
             AddEntryButton(layoutData.onClickAddEntry)
+
         }
     }
 }

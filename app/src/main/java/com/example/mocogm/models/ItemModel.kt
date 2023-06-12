@@ -1,11 +1,8 @@
 package com.example.mocogm.models
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.auth.User
 
 sealed class ItemState {
     object ItemIdle : ItemState()
@@ -79,27 +76,3 @@ class ItemListRepo() {
 
 }
 
-
-// Testing if everything works as intended :)
-fun main()  {
-    /*
-    val testlogin = LogSignUser("mjungilligens@gmail.com", "asdfghjkl1")
-    if (testlogin.isEmailValid()) println("Email is valid") // funktioniert noch nicht
-    if (testlogin.isPasswordLongerThan7()) println("pw is longer than 7")
-    if (testlogin.doesPasswordContainANumber()) println("pw contains a number")
-
-     */
-
-    /*
-    val user = User("abc@gmail.de", "asdfghj123")
-    val banane = ItemModel(Type.GESUCHT, "hdjashdjkashd", "123", "bildlalala", "GM", user)
-
-
-    val itemRepo = ItemRepo()
-
-    // itemRepo.deleteItem(banane.itemId)
-    println(itemRepo.addItem(banane))
-
-     */
-
-}
