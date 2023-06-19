@@ -206,8 +206,8 @@ fun LogSignSingleTextbox(
                 text = placeholder
             )
         },
-        visualTransformation = if(placeholder == "Passwort") PasswordVisualTransformation() else VisualTransformation.None,
-        keyboardOptions = if(placeholder == "Passwort") KeyboardOptions(keyboardType = KeyboardType.Password) else KeyboardOptions(keyboardType = KeyboardType.Text)
+        visualTransformation = if(placeholder == "Passwort" || placeholder == "Passwort wiederholen") PasswordVisualTransformation() else VisualTransformation.None,
+        keyboardOptions = if(placeholder == "Passwort" || placeholder == "Passwort wiederholen") KeyboardOptions(keyboardType = KeyboardType.Password) else KeyboardOptions(keyboardType = KeyboardType.Text)
 
     )
 
