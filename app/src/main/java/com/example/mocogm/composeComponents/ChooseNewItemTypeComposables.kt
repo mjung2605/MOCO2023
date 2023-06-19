@@ -19,28 +19,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import com.example.mocogm.ui.theme.OffBlack
 
 import com.example.mocogm.gebuendelteDaten.GGBoxes
+import com.example.mocogm.gebuendelteDaten.GGefunden
+import com.example.mocogm.gebuendelteDaten.GGesucht
 import com.example.mocogm.gebuendelteDaten.Hinweis
 
-// Neuer Eintrag Auswahl Gesucht oder Gefunden //
-
-/// Friedhof
-/*
-green box:
-modifier = Modifier
-                    .size(180.dp)
-                    .padding(55.dp, 20.dp, 10.dp, 0.dp)
-
-blue box:
-modifier = Modifier
-                    .size(180.dp)
-                    .padding(40.dp, 20.dp, 10.dp, 0.dp)
-
-
-
- */
 
 @Composable
 fun GesuchtGefundenBoxen(blueBox: GGBoxes, greenBox: GGBoxes) {
@@ -79,10 +65,22 @@ fun ClickableBoxes(
     ) {
         Column(
             modifier = Modifier
-                .padding(),
+                .padding()
+                .align(Alignment.Center),
         ) {
             Text(boxGG.titleText, fontSize = 50.sp)
-            Image(painter = painterResource(id = boxGG.iconDrawableID), contentDescription = boxGG.iconDesc) // image resource etc wird übergeben
+            Image(painter = painterResource(id = boxGG.iconDrawableID), contentDescription = boxGG.iconDesc,
+            modifier =
+            (if(boxGG is GGefunden)
+                Modifier
+                    .size(70.dp) // größe des Box-icons (grün)
+                    .align(Alignment.CenterHorizontally)
+
+            else
+                Modifier // Größe des Lupen-Icons (blau)
+                    .size(70.dp)
+                    .align(Alignment.CenterHorizontally)))
+
         }
     }
 }
@@ -140,13 +138,12 @@ fun HinweisText(woGesucht: String) {
 fun HinweisBestaetigung(woGesucht: String = "") {
 
     Row {
-        var isButtonEnabled: Boolean = false
+
         val checkedStateJava = remember { mutableStateOf(false) }
         Checkbox(
             checked = checkedStateJava.value,
             onCheckedChange = {
                 checkedStateJava.value = it
-                isButtonEnabled = !isButtonEnabled // changes value to what it wasn't before (true or false)
                               },
         )
         Box(

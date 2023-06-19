@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -21,6 +22,9 @@ import androidx.compose.ui.unit.sp
 import com.example.mocogm.ui.theme.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import com.example.mocogm.models.AuthState
 import com.example.mocogm.viewmodels.AuthViewModel
 import androidx.lifecycle.*
@@ -47,8 +51,6 @@ fun StartScreen(
     viewModel: AuthViewModel
 ) {
 
-    // viewModel wird hier observed
-
 
     Box( // Hintergrund-Gradient
         Modifier
@@ -73,7 +75,7 @@ fun StartScreen(
 @Composable
 fun TitleScreen(type: StartTitle) {
 
-    Box(Modifier.clickable(onClick = (type).onClickStartTitle)) {
+    Box(Modifier.clickable(onClick = type.onClickStartTitle)) {
         Image(
             painterResource(id = R.drawable.goldmine_2_3x), "gm_logo",
             Modifier
@@ -122,7 +124,8 @@ fun LogInSignUpScreen(type: LogSignType, viewModel: AuthViewModel) {
     }
 
 
- /*   when(loginState) {
+    /*
+    when(loginState) {
 
         is AuthState.AuthError -> {
             Box { (loginState as AuthState.AuthError).errorMessage?.let { Text(it) } }
@@ -134,11 +137,12 @@ fun LogInSignUpScreen(type: LogSignType, viewModel: AuthViewModel) {
             }
         }
         AuthState.AuthSuccess -> {
-            // TODO: get logged in user?
             (type).onClickNavigate // for now only navigates to blue main tabs
         }
         else -> { } // authidle -> do nothing
-    }*/
+    }
+
+     */
 
 }
 
@@ -201,7 +205,12 @@ fun LogSignSingleTextbox(
             Text(
                 text = placeholder
             )
-        })
+        },
+        visualTransformation = if(placeholder == "Passwort") PasswordVisualTransformation() else VisualTransformation.None,
+        keyboardOptions = if(placeholder == "Passwort") KeyboardOptions(keyboardType = KeyboardType.Password) else KeyboardOptions(keyboardType = KeyboardType.Text)
+
+    )
+
 }
 
 @Composable
