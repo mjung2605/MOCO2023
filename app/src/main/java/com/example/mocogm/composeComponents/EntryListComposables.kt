@@ -19,6 +19,7 @@ import com.example.mocogm.gebuendelteDaten.MainLayout
 import com.example.mocogm.gebuendelteDaten.MainUserInterface
 import com.example.mocogm.gebuendelteDaten.PersonalTabs
 import com.example.mocogm.models.ItemModel
+import com.example.mocogm.models.Type
 import com.example.mocogm.ui.theme.LightGray
 import com.example.mocogm.ui.theme.MainBlue
 import com.example.mocogm.ui.theme.MainGreen
@@ -37,25 +38,22 @@ fun EntryList(layoutData: MainUserInterface, viewModel: ItemListViewModel) {
     }
 }
 
-// alles die gleichen Einträge für Visualisierung. später mit MVVM Implementierung mit observern etc
-
-
 @Composable
-fun ListOfEntrysLayout(layoutData: MainUserInterface, viewModel: ItemListViewModel = ItemListViewModel()) {
+fun ListOfEntrysLayout(layoutData: MainUserInterface, viewModel: ItemListViewModel) {
 
     val itemList: List<ItemModel>? by viewModel.itemList.observeAsState()
     val selectedItem: ItemModel? by viewModel.selectedItem.observeAsState()
 
     if(itemList==null) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-
             Text(text = "Noch keine Fundsachen vorhanden...", color = LightGray)
-            
         }
+
     } else {
         LazyColumn {
             items(itemList!!.size) { item ->
                 ListEntryLayout(
+                    itemList!![item].type,
                     layoutData,
                     onClick = {
                         viewModel.onItemClicked(itemList!![item]) // setzt das Item, was angeklickt wurde, als selected item
@@ -69,16 +67,16 @@ fun ListOfEntrysLayout(layoutData: MainUserInterface, viewModel: ItemListViewMod
 
 
 @Composable
-fun ListEntryLayout(layoutData: MainUserInterface, onClick: () -> Unit) {
+fun ListEntryLayout(type: Type, layoutData: MainUserInterface, onClick: () -> Unit) {
     Box(
         Modifier
             .padding(top = 20.dp, start = 20.dp, end = 20.dp, bottom = 10.dp)
             .fillMaxWidth()
             .height(90.dp)
-            .clickable(onClick = onClick) // TODO("Go to Detailed Entry")
+            .clickable(onClick = onClick)
     ) {
         Row {
-            ListPreviewPicture(MainGreen)
+            ListPreviewPicture(if(type== Type.GEFUNDEN) MainGreen else MainBlue)
             ListEntryTextContent(layoutData, "Titel", "Beschreibung")
         }
     }
@@ -94,14 +92,14 @@ fun ListPreviewPicture(colorBorder: Color) {
             .border(BorderStroke(2.dp, colorBorder), RoundedCornerShape(3.dp))
             .width(85.dp)
             .height(85.dp)
-        // serves as Container (so that picture content isn't outsite border corners)
+
     ) {
-        Box(
+        Box( // serves as Container (so that picture content isn't outsite border corners)
             modifier = Modifier
                 .padding(2.dp)
                 .fillMaxSize()
-                .background(Color.Gray)
-        ) // Platzhalter: Bild des Fundstückes
+                .background(Color.Gray) // Platzhalter: Bild des Fundstückes
+        )
         {
 
         }

@@ -1,5 +1,7 @@
 package com.example.mocogm.viewmodels
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
@@ -7,15 +9,21 @@ import androidx.lifecycle.ViewModel
 import com.example.mocogm.models.*
 
 import com.google.firebase.auth.FirebaseUser
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class ItemViewModel(): ViewModel() {
     private val itemRepo = ItemRepo()
 
-    fun addItem (type: Type, title: String, desc: String, photo: String, loc: String, user: FirebaseUser) {
+    fun addItem(type: Type, title: String, desc: String, photo: String, loc: String, user: FirebaseUser) {
         val newItem = ItemModel(type, title, desc, photo, loc, user)
-        itemRepo.addItem(newItem)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            itemRepo.addItem(newItem)
+
+        }
     }
 
     fun getItem(itemID: String) = itemRepo.getItem(itemID)
@@ -33,6 +41,4 @@ class ItemListViewModel(private val itemListModel: ItemListRepo = ItemListRepo()
     fun onItemClicked(item: ItemModel) {
         _selectedItem.value = item
     }
-
 }
-

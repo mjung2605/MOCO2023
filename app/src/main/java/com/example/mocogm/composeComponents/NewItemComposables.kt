@@ -17,11 +17,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mocogm.R
 import com.example.mocogm.gebuendelteDaten.NewItem
-import com.example.mocogm.gebuendelteDaten.NewItemGesucht
+import com.example.mocogm.models.ItemModel
 import com.example.mocogm.models.Type
 
 import com.example.mocogm.ui.theme.*
@@ -29,12 +30,7 @@ import com.example.mocogm.viewmodels.ItemViewModel
 import com.google.firebase.auth.FirebaseUser
 
 @Composable
-fun NewItem(
-    layoutData: NewItem,
-    viewModel: ItemViewModel,
-    currentUser: FirebaseUser,
-
-) {
+fun NewItem(layoutData: NewItem, viewModel: ItemViewModel, currentUser: FirebaseUser) {
     Column() {
         NewItemHeader(layoutData)
         ContentEingaben(layoutData, viewModel, currentUser)
@@ -109,7 +105,7 @@ fun ContentEingaben(layoutData: NewItem, viewModel: ItemViewModel, currentUser: 
                 // LOCATION DESC GELÖSCHT. EIN FELD FÜR EINE BESCHREIBUNG REICHT
 
                 ButtonFinishEntry(onClickAdd = {viewModel.addItem(
-                    type = if(layoutData.typeTitle == "Gesucht") Type.GESUCHT else Type.GEFUNDEN,
+                    type = if (layoutData.typeTitle == "Gefunden") Type.GEFUNDEN else Type.GESUCHT,
                     titleValue, descValue, pictureValue, mapValue, currentUser
                 )}, onClickNav = {layoutData.onClickNav()} , layoutData.color)
             }
@@ -131,7 +127,12 @@ fun AddPhoto(pictureValue: String, onValueChange: (String)->Unit) {
             .width(width = 172.dp)
             .height(height = 172.dp)
             .background(LightGray)
-    ) {
+    ) {// als Platzhalter für Fotoimplementierung:
+        OutlinedTextField(value = pictureValue, onValueChange = onValueChange, placeholder = { Text(
+            text = "Foto hinzufügen"
+        )})
+
+        /*
         Text(
             text = "add photo",
             color = OffBlack,
@@ -141,6 +142,8 @@ fun AddPhoto(pictureValue: String, onValueChange: (String)->Unit) {
             textAlign = TextAlign.Center,
             modifier = Modifier
         )
+
+         */
     }
 }
 
@@ -149,6 +152,7 @@ fun AddTitel(layoutData: NewItem, titleValue: String, onValueChange: (String) ->
     OutlinedTextField(value = titleValue, onValueChange = onValueChange, placeholder = {Text(text = layoutData.titlePlaceholder)})
 }
 
+
 @Composable
 fun AddDesc(descValue: String, onDescValueChange: (String) -> Unit) {
     Box(
@@ -156,20 +160,10 @@ fun AddDesc(descValue: String, onDescValueChange: (String) -> Unit) {
             .border(1.dp, OffBlack)
             .padding(5.dp)
     ) {
-        Text( // TODO: make outlined textfield
-            text = "Jorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.",
-            color = DarkGray,
-            style = TextStyle(
-                fontSize = 15.sp
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-        )
+        OutlinedTextField(value = descValue, onValueChange = onDescValueChange, modifier = Modifier.height(70.dp), placeholder = { Text(
+            text = "Füge eine Beschreibung hinzu..."
+        )})
     }
-
-    OutlinedTextField(value = descValue, onValueChange = onDescValueChange, modifier = Modifier.height(70.dp), placeholder = { Text(
-        text = "Füge eine Beschreibung hinzu..."
-    )})
 }
 
 @Composable
@@ -205,7 +199,11 @@ fun AddLocation(mapValue: String, onMapValueChange: (String) -> Unit) { // TODO 
                         bottom = 10.dp
                     )
             ) {
-                Text(
+                OutlinedTextField(value = mapValue, onValueChange = onMapValueChange, placeholder = { Text(
+                    text = "Standort hinzufügen"
+                )})
+                /*
+                Text( // wird mal button
                     text = "Standort auswählen",
                     color = OffBlack,
                     style = TextStyle(
@@ -213,12 +211,12 @@ fun AddLocation(mapValue: String, onMapValueChange: (String) -> Unit) { // TODO 
                     ),
                     modifier = Modifier
                 )
+                */
             }
         }
     }
 }
 
-//TODO() später Rückgabetyp in Unit ändern, nur testing purposes
 @Composable
 fun ButtonFinishEntry(onClickAdd: () -> Unit, onClickNav: () -> Unit, color: Color) {
     Box(
@@ -231,7 +229,7 @@ fun ButtonFinishEntry(onClickAdd: () -> Unit, onClickNav: () -> Unit, color: Col
     ) {
         Button(
             onClick = {
-                onClickAdd() //TODO() fix :'((((((((
+                onClickAdd()
                 onClickNav()
                       },
             modifier = Modifier
@@ -245,7 +243,7 @@ fun ButtonFinishEntry(onClickAdd: () -> Unit, onClickNav: () -> Unit, color: Col
                 style = TextStyle(
                     fontSize = 20.sp,
                     color = OffBlack
-                ),
+                )
             )
         }
     }

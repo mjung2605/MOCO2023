@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -23,18 +24,22 @@ import com.example.mocogm.ui.theme.LightGray
 import com.example.mocogm.ui.theme.OffBlack
 import com.example.mocogm.ui.theme.OffWhite
 import com.example.mocogm.R
-import com.example.mocogm.gebuendelteDaten.DetailedEntry
+import com.example.mocogm.gebuendelteDaten.DetailedEntryPersonal
+import com.example.mocogm.ui.theme.MainBlue
 import com.example.mocogm.viewmodels.ItemViewModel
 import com.google.firebase.firestore.auth.User
 
-
-// dies ist das einzige Composable der Komponenten-Composables, welches
+/*
+//
 @Composable
 fun DetailedEntry(layoutData: DetailedEntry, viewModel: ItemViewModel, itemID: String) {
 
-    val item = viewModel.getItem(itemID)
+    val item = viewModel.getItem(itemID)!!
 
-    val titel: String = item!!.title
+
+
+    val type = item.type
+    val titel: String = item.title
     val desc: String = item.desc
     val loc = item.loc
     val photo = item.picture
@@ -49,34 +54,37 @@ fun DetailedEntry(layoutData: DetailedEntry, viewModel: ItemViewModel, itemID: S
             Modifier.padding(bottom = 20.dp),
             contentAlignment = Alignment.Center
         ) {
-            ButtonDeleteOrMessage(layoutData)
+            if(layoutData is DetailedEntryPersonal)
+                ButtonDelete(layoutData.onClickAction)
         }
     }
 }
 
+ */
+
 //
-// Button auf persönlicher Seite: man kann eigene Einträge löschen
-// noch hinzufügen: übergabe Beschreibung, getMaps, getPicture
+//
+
 @Composable
-fun ButtonDeleteOrMessage(layoutData: DetailedEntry) {
-    Button(onClick = layoutData.onClickAction,
+fun ButtonDelete(onClickAction: () -> Unit) {
+    Button(onClick = onClickAction,
         modifier = Modifier
             .width(width = 260.dp)
             .height(height = 74.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = layoutData.buttonColor)
+        colors = ButtonDefaults.buttonColors(backgroundColor = MainBlue)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
-                painterResource(id = layoutData.iconDrawableID),
-                layoutData.iconDesc,
+                painterResource(id = R.drawable.outline_delete_48),
+                "trashcan",
                 modifier = Modifier
                     .size(30.dp)
                     .padding(top = 5.dp)
             )
             Spacer(Modifier.padding(start = 10.dp))
             Text(
-                text = layoutData.buttonText,
+                text = "Eintrag löschen",
                 style = TextStyle(
                     fontSize = 20.sp,
                     color = OffBlack

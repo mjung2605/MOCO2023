@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
+import com.example.mocogm.Screen.DetailedEntry.getDetailScreenRoute
 //import com.example.mocogm.ComposableType.StartBlue.navController
 import com.example.mocogm.ui.theme.MOCOGMTheme
 import com.example.mocogm.composeComponents.*
@@ -39,14 +40,11 @@ sealed class Screen(val route: String) {
 
     object NeuesItemGreen : Screen("item_new_green")
     object NeuesItemBlue : Screen("item_new_blue")
-    object DetailedEntry : Screen("detail_entry") // testen ob das so funktioniert lol
-    object PrivateChat : Screen("direct_message")
+    object DetailedEntry : Screen("detail_entry") // testen ob das mit getDetailScreenRoute() funktioniert lol
 
     fun getDetailScreenRoute(itemID: String = "") = "detail_entry/$itemID"
 
 }
-
-
 
 interface ComposableType
 
@@ -57,13 +55,12 @@ class MainActivity : ComponentActivity() {
     private val itemViewModel: ItemViewModel by viewModels()
     private val itemListViewModel: ItemListViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MOCOGMTheme() {
                 val navController = rememberNavController()
-                NavApplicationHost(navController, authViewModel, itemViewModel,itemListViewModel)
+                NavApplicationHost(navController, authViewModel, itemViewModel, itemListViewModel)
             }
         }
     }
@@ -71,7 +68,7 @@ class MainActivity : ComponentActivity() {
 
 // Composable to store NavHost
 @Composable
-fun NavApplicationHost(navController: NavHostController,  authViewModel: AuthViewModel, itemViewModel: ItemViewModel, itemListViewModel: ItemListViewModel) {
+fun NavApplicationHost(navController: NavHostController, authViewModel: AuthViewModel, itemViewModel: ItemViewModel, itemListViewModel: ItemListViewModel) {
 
     // TODO() wie handeln wir Zugriffe auf die bestehenden Items, also wie übergeben wir, welches Item aus der Liste angeklickt wurde?
 
@@ -127,30 +124,19 @@ fun NavApplicationHost(navController: NavHostController,  authViewModel: AuthVie
         }
 
         composable(Screen.NeuesItemBlue.route) {
-            NewItem(
-                NewItemGesucht(navController),
-                itemViewModel, authViewModel.getCurrentlyLoggedInUser()
-            )
+            NewItem(NewItemGesucht(navController), itemViewModel, authViewModel.getCurrentlyLoggedInUser())
         }
 
         composable(Screen.NeuesItemGreen.route) {
-            NewItem(
-                NewItemGefunden(navController),
-                itemViewModel, authViewModel.getCurrentlyLoggedInUser()
-            )
+            NewItem(NewItemGefunden(navController), itemViewModel, authViewModel.getCurrentlyLoggedInUser())
         }
 
-
+        // TODO() go back to detailed entry
         // for show: Detailed Entry von der MainPageBlue
         composable(Screen.DetailedEntry.route) {
-            DetailedEntry(DetailedEntryMainBlue(navController), itemViewModel, navController.currentBackStackEntry!!.arguments!!.getString("itemID")!!)
+            ButtonDelete { navController.navigate(Screen.EntryListMainBlue.route) }
         }
 
-        composable(Screen.PrivateChat.route) {
-            PrivateChat(
-                layoutData = PersonalTabsBlue(navController),
-                "[anderer Benutzer]")
-        }
     }
 }
 

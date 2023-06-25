@@ -3,7 +3,7 @@ package com.example.mocogm.gebuendelteDaten
 import androidx.navigation.NavHostController
 import com.example.mocogm.ComposableType
 import com.example.mocogm.Screen
-
+import com.example.mocogm.models.ItemModel
 import com.example.mocogm.ui.theme.MainBlue
 import com.example.mocogm.ui.theme.MainGreen
 
@@ -18,7 +18,6 @@ abstract class MainUserInterface(private val navController: NavHostController): 
 
     val onClickHome: () -> Unit = { navController.navigate(Screen.EntryListMainBlue.route) }
     val onClickPersonal: () -> Unit = { navController.navigate(Screen.EntryListPersonalBlue.route) }
-    val onClickChat: () -> Unit = { navController.navigate(Screen.PrivateChat.route) }
 
 
     val onClickDetailEntry: (String) -> Unit = { it ->

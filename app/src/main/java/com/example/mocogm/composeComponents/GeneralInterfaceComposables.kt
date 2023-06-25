@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mocogm.ui.theme.*
 import com.example.mocogm.R
-import com.example.mocogm.Screen
 import com.example.mocogm.gebuendelteDaten.MainLayout
 import com.example.mocogm.gebuendelteDaten.MainUserInterface
 
@@ -63,11 +62,7 @@ fun TopBar(titleText: String, layoutData: MainUserInterface)  { // Text ist davo
                     //.fillMaxHeight()
                 // ,contentAlignment = Alignment.TopEnd
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.baseline_chat_bubble_outline_24),
-                    contentDescription = "chat_bubble",
-                    Modifier.clickable(onClick = layoutData.onClickChat)
-                )
+
             }
             Box( // Personal Page button
                 Modifier
@@ -103,7 +98,6 @@ fun BottomBar(layoutData: MainUserInterface) {
             verticalArrangement = Arrangement.Top
         ) {
             AddEntryButton(layoutData.onClickAddEntry)
-
         }
     }
 }

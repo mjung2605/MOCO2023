@@ -72,7 +72,7 @@ class AuthViewModel(private val userRepo: UserRepository = UserRepository()): Vi
     }
 
     fun getCurrentlyLoggedInUser(): FirebaseUser {
-        if (_authState.value != AuthState.AuthSuccess) throw Exception("Fehler beim Finden eines angemeldeten Benutzers auf diesem Gerät.")
+
         return userRepo.currentUser()
     }
 }

@@ -40,12 +40,9 @@ data class NewItemGefunden(val navController: NavController): NewItem {
     override val iconDesc = "box"
     override val typeTitle = "Gefunden"
     override val onClickAdd = {}
-    override val onClickNav =
-        // TODO() add new item to database
-        // for now only navigates to the tab the Item is added to.
-        // when implementing database, observe states and display loading symbol as needed
-        {navController.navigate(
-            if (color== MainGreen) Screen.EntryListPersonalGreen.route else Screen.EntryListPersonalBlue.route
+    override val onClickNav ={
+            navController.navigate(
+                if (color == MainGreen) Screen.EntryListPersonalGreen.route else Screen.EntryListPersonalBlue.route
         )}
     override val titlePlaceholder = "Ich habe gefunden..."
 }
