@@ -1,0 +1,118 @@
+[
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/drawable_outline_account_circle_48_black.xml.flat",
+        "source": "com.example.mocogm.app-main-60:/drawable/outline_account_circle_48_black.xml"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/drawable_goldmine_2_3x.png.flat",
+        "source": "com.example.mocogm.app-main-60:/drawable/goldmine_2_3x.png"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/xml_backup_rules.xml.flat",
+        "source": "com.example.mocogm.app-main-60:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/drawable_baseline_chat_bubble_outline_24.xml.flat",
+        "source": "com.example.mocogm.app-main-60:/drawable/baseline_chat_bubble_outline_24.xml"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/drawable_goldmine_2.png.flat",
+        "source": "com.example.mocogm.app-main-60:/drawable/goldmine_2.png"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.mocogm.app-main-60:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "com.example.mocogm.app-main-60:/drawable-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.mocogm.app-main-60:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.example.mocogm.app-main-60:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.mocogm.app-main-60:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/xml_data_extraction_rules.xml.flat",
+        "source": "com.example.mocogm.app-main-60:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.example.mocogm.app-main-60:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.example.mocogm.app-main-60:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.example.mocogm.app-main-60:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.mocogm.app-main-60:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.mocogm.app-main-60:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/drawable_goldmine_2_3x_quadrat.png.flat",
+        "source": "com.example.mocogm.app-main-60:/drawable/goldmine_2_3x_quadrat.png"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.mocogm.app-main-60:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/drawable_goldmine_1.png.flat",
+        "source": "com.example.mocogm.app-main-60:/drawable/goldmine_1.png"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.example.mocogm.app-main-60:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/mipmap-anydpi-v33_ic_launcher.xml.flat",
+        "source": "com.example.mocogm.app-main-60:/mipmap-anydpi-v33/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/drawable_lupe.png.flat",
+        "source": "com.example.mocogm.app-main-60:/drawable/lupe.png"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.mocogm.app-main-60:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/drawable_baseline_chat_bubble_outline_24_white.xml.flat",
+        "source": "com.example.mocogm.app-main-60:/drawable/baseline_chat_bubble_outline_24_white.xml"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/drawable_outline_delete_48.xml.flat",
+        "source": "com.example.mocogm.app-main-60:/drawable/outline_delete_48.xml"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/drawable_box.png.flat",
+        "source": "com.example.mocogm.app-main-60:/drawable/box.png"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.example.mocogm.app-main-60:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/drawable_placeholder.png.flat",
+        "source": "com.example.mocogm.app-main-60:/drawable/placeholder.png"
+    },
+    {
+        "merged": "com.example.mocogm.app-merged_res-58:/drawable_round_add_48.xml.flat",
+        "source": "com.example.mocogm.app-main-60:/drawable/round_add_48.xml"
+    }
+]
