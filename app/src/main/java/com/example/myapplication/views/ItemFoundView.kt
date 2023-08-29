@@ -1,11 +1,19 @@
 // HomeScreen.kt
 package com.example.myapplication
 
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.service.autofill.FieldClassification.Match
+import android.widget.LinearLayout
+import androidx.camera.core.Preview
+import androidx.camera.view.LifecycleCameraController
+import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,11 +25,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.layout.ContentScale
@@ -35,12 +47,109 @@ import com.example.myapplication.ui.theme.OffBlack
 
 
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.viewinterop.AndroidView
 import com.example.myapplication.ui.theme.LightGray
 import com.example.myapplication.ui.theme.OffWhite
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionState
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
+
+@Composable
+fun NewItemScreen(viewModel: HomeViewModel){
+    val cameraPermissionState: PermissionState = rememberPermissionState(android.Manifest.permission.CAMERA)
+
+    MainContent(
+        hasPermission = cameraPermissionState.status.isGranted,
+        onRequestPermission = cameraPermissionState::launchPermissionRequest
+    )
+}
+
+
+@Composable
+private fun MainContent(
+    hasPermission: Boolean,
+    onRequestPermission: () -> Unit
+){
+    if (hasPermission){
+        NewItemGefundenScreen(viewModel = HomeViewModel())
+    }else{
+        NoPermissionScreen(onRequestPermission)
+    }
+}
+
+@Composable
+fun NoPermissionScreen(
+    onRequestPermission: () -> Unit
+) {
+    NoPermissionScreen(
+        onRequestPermission = onRequestPermission
+    )
+}
+
+@Composable
+fun NoPermissionContent(
+    onRequestPermission: () -> Unit
+){
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ){
+        Text(text= "Please grant permission to use the funcionality")
+        Button(onClick= onRequestPermission){
+            Text(text="grant permission")
+        }
+    }
+}
+
+
+@Composable
+fun CameraScreen(
+){
+    CameraContent()
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+private fun CameraContent(){
+
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val cameraController = remember{ LifecycleCameraController(context)}
+
+    Scaffold(modifier = Modifier.fillMaxSize()) {paddingValues: PaddingValues ->
+        AndroidView(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            factory = {context ->
+                PreviewView(context).apply{
+                    setBackgroundColor(Color.BLACK)
+                    scaleType = PreviewView.ScaleType.FILL_START
+                }.also {previewView ->
+                    previewView.controller = cameraController
+                    cameraController.bindToLifecycle(lifecycleOwner)
+
+                }
+
+            })
+
+    }
+}
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewItemGefundenScreen(viewModel: HomeViewModel) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -91,10 +200,14 @@ fun NewItemGefundenScreen(viewModel: HomeViewModel) {
                 .background(LightGray)
         ) {
             Text(
-                text = "Gefunden",
+                text = "Kamera gefunden",
                 color = OffBlack,
                 style = TextStyle(fontSize = 45.sp),
             )
+            CameraScreen()
+            //--------------------
+
+
         }
 
         OutlinedTextField(
@@ -158,23 +271,23 @@ fun NewItemGefundenScreen(viewModel: HomeViewModel) {
                 }
             }
         }
-                Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-                Button(
-                    onClick = {
-                        val newItem = NewItem(
-                            gefundenText = viewModel.gefundenTitleEingabe.value,
-                            beschreibungText = viewModel.gefundenBeschreibungEingabe.value,
-                        )
+        Button(
+            onClick = {
+                val newItem = NewItem(
+                    gefundenText = viewModel.gefundenTitleEingabe.value,
+                    beschreibungText = viewModel.gefundenBeschreibungEingabe.value,
+                )
 
-                        viewModel.saveData(newItem)
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(74.dp)
-                ) {
-                    Text(text = "Fundstück melden")
-                }
+                viewModel.saveData(newItem)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(74.dp)
+        ) {
+            Text(text = "Fundstück melden")
+        }
 
 
     }
