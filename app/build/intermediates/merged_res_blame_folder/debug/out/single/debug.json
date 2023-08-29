@@ -1,0 +1,94 @@
+[
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\drawable_box.png.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\drawable\\box.png"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\drawable_logo.png.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\drawable\\logo.png"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\xml\\data_extraction_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\drawable-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\drawable_plus.png.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\drawable\\plus.png"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\mipmap-mdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\mipmap-xhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\drawable_lupe.png.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\drawable\\lupe.png"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\drawable_location.png.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\drawable\\location.png"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\mipmap-hdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\drawable_logox.png.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\drawable\\logox.png"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\mipmap-xxxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.myapplication.app-merged_res-57:/drawable_benutzer.png.flat",
+        "source": "com.example.myapplication.app-main-59:/drawable/benutzer.png"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\mipmap-mdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\mipmap-xxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\xml\\backup_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-merged_res-57:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Angi\\.gradle\\daemon\\8.0\\com.example.myapplication.app-main-59:\\mipmap-hdpi\\ic_launcher_round.webp"
+    }
+]

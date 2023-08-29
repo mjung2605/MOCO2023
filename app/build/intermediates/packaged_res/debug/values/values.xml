@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">My Application</string>
+    <string name="default_web_client_id" translatable="false">167231231190-8k9m8qnp7bstlu8h69b2k40km8bojfgp.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">167231231190</string>
+    <string name="google_api_key" translatable="false">AIzaSyDeOnESDAQ8KuKgOc_Vl7W7uvApt1kurfQ</string>
+    <string name="google_app_id" translatable="false">1:167231231190:android:8627e3fd9fe778fe1b2577</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDeOnESDAQ8KuKgOc_Vl7W7uvApt1kurfQ</string>
+    <string name="google_storage_bucket" translatable="false">my-application-75763.appspot.com</string>
+    <string name="project_id" translatable="false">my-application-75763</string>
+    <style name="Theme.MyApplication" parent="android:Theme.Material.Light.NoActionBar"/>
+</resources>
