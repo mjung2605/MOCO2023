@@ -1,7 +1,10 @@
 package com.example.myapplication
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.widget.LinearLayout
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
@@ -37,100 +40,104 @@ import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.theme.MainGreen
 import com.example.myapplication.ui.theme.OffBlack
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.myapplication.ui.theme.LightGray
 import com.example.myapplication.ui.theme.OffWhite
-import com.google.android.gms.auth.api.phone.SmsCodeAutofillClient
-
-
-
-/*@Composable
-fun NewItemScreen(viewModel: ItemViewModel){
-  *//*  val cameraPermissionState: SmsCodeAutofillClient.PermissionState = rememberPermissionState(android.Manifest.permission.CAMERA)
-
-    MainContent(
-        hasPermission = cameraPermissionState.status.isGranted,
-        onRequestPermission = cameraPermissionState::launchPermissionRequest
-    )*//*
-}
-
-
-@Composable
-private fun MainContent(
-    hasPermission: Boolean,
-    onRequestPermission: () -> Unit
-){
-    if (hasPermission){
-        NewItemGefundenScreen(viewModel = ItemViewModel())
-    }else{
-        NoPermissionScreen(onRequestPermission)
-    }
-}
-
-@Composable
-fun NoPermissionScreen(
-    onRequestPermission: () -> Unit
-) {
-    NoPermissionScreen(
-        onRequestPermission = onRequestPermission
-    )
-}
-
-@Composable
-fun NoPermissionContent(
-    onRequestPermission: () -> Unit
-){
-    Column (
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ){
-        Text(text= "Please grant permission to use the funcionality")
-        Button(onClick= onRequestPermission){
-            Text(text="grant permission")
-        }
-    }
-}
+import com.example.myapplication.viewModels.CameraViewModel
+import com.example.myapplication.views.CameraState
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 
 
 @Composable
 fun CameraScreen(
-){
-    CameraContent()
+    viewModel: CameraViewModel =
+) {
+
+    val cameraState: CameraState by viewModel.state.collectAsStateWithLifecycle()
+
+    CameraContent(
+        onPhotoCaptured = viewModel::onPhotoCaptured
+    )
+
+    cameraState.capturedImage?.let { capturedImage: Bitmap ->
+        CapturedImageBitmapDialog(
+            capturedImage = capturedImage,
+            onDismissRequest = viewModel::onCapturedPhotoConsumed
+        )
+    }
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-private fun CameraContent(){
+private fun CapturedImageBitmapDialog(
+    capturedImage: Bitmap,
+    onDismissRequest: () -> Unit
+) {
+
+    val capturedImageBitmap: ImageBitmap = remember { capturedImage.asImageBitmap() }
+
+    Dialog(
+        onDismissRequest = onDismissRequest
+    ) {
+        Image(
+            bitmap = capturedImageBitmap,
+            contentDescription = "Captured photo"
+        )
+    }
+}
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Composable
+private fun CameraContent(
+    onPhotoCaptured: (Bitmap) -> Unit
+) {
 
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
-    val cameraController = remember{ LifecycleCameraController(context)}
+    val cameraController = remember { LifecycleCameraController(context) }
 
-    Scaffold(modifier = Modifier.fillMaxSize()) {paddingValues: PaddingValues ->
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        floatingActionButton = {
+            /*ExtendedFloatingActionButton(
+
+                onClick = {
+                    val mainExecutor = ContextCompat.getMainExecutor(context)
+
+                    cameraController.takePicture(mainExecutor, object : ImageCapture.OnImageCapturedCallback() {
+
+
+                    })
+                }
+            )*/
+        }
+    ) { paddingValues: PaddingValues ->
         AndroidView(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
-            factory = {context ->
-                PreviewView(context).apply{
+            factory = { context ->
+                PreviewView(context).apply {
+                    layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
                     setBackgroundColor(Color.BLACK)
+                    implementationMode = PreviewView.ImplementationMode.COMPATIBLE
                     scaleType = PreviewView.ScaleType.FILL_START
-                }.also {previewView ->
+                }.also { previewView ->
                     previewView.controller = cameraController
                     cameraController.bindToLifecycle(lifecycleOwner)
-
                 }
-
-            })
-
+            }
+        )
     }
-}*/
+}
+
+
+
 
 
 

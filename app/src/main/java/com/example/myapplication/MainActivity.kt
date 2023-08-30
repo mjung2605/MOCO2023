@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -25,6 +26,7 @@ import com.example.myapplication.viewModels.ListViewModel
 import com.example.myapplication.views.StartScreen
 import com.example.myapplication.views.*
 import com.google.android.gms.actions.ItemListIntents
+import com.example.myapplication.
 
 
 sealed class Screen(val route: String) {
@@ -53,12 +55,12 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             NavApplicationHost(navController, authViewModel, itemViewModel, listViewModel)
 
-       /*     //ComposeCameraX {
+            //ComposeCameraX {
             Surface(
                 modifier = Modifier.fillMaxSize()
             ) {
-                NewItemGefundenScreen(viewModel = ItemViewModel())
-            }*/
+                NewItemGefundenScreen()
+            }
             //}
          //window.statusBarColor = getColor(R.color.black)
            // NewItemGefundenScreen(viewModel)
