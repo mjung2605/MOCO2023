@@ -31,7 +31,7 @@ fun StartScreen(navController: NavHostController) {
     Box(
         modifier = Modifier
             .background(brush = Brush.verticalGradient(listOf(MainBlue, MainGreen)))
-            .clickable { (navController.navigate("listItems")) }
+            .clickable { (navController.navigate("login")) }
             .fillMaxSize(),
         contentAlignment = androidx.compose.ui.Alignment.Center
     ) {

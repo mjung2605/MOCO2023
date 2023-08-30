@@ -1,4 +1,3 @@
-// ListViewModel.kt
 package com.example.myapplication.viewModels
 
 import androidx.lifecycle.LiveData
@@ -16,27 +15,30 @@ class ListViewModel : ViewModel() {
     private val _firebaseObjects = MutableLiveData<List<FirebaseObject>>()
     val firebaseObjects: LiveData<List<FirebaseObject>> = _firebaseObjects
 
-
     init {
         fetchFirebaseObjects()
     }
 
-    private fun fetchFirebaseObjects() {
+     fun fetchFirebaseObjects() {
         val tempList =mutableListOf<FirebaseObject>()
+        var itemCount = 0
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val querySnapshot = firestore.collection("your_collection_name").get().await()
+                val querySnapshot = firestore.collection("items").get().await()
                 val firebaseObjectsList = querySnapshot.documents.map { document ->
                     val title = document.getString("title") ?: ""
                     val description = document.getString("description") ?: ""
+                    itemCount++
                     FirebaseObject(title, description)
                 }
                 _firebaseObjects.postValue(firebaseObjectsList)
             } catch (e: Exception) {
-                // Handle error here, like logging or showing a toast
+
             }
         }
+        fun getItemCount():Int{
+            return itemCount
+        }
     }
-
-
 }
+

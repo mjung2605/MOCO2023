@@ -1,15 +1,10 @@
 package com.example.myapplication
 
-import android.annotation.SuppressLint
-import android.graphics.Color
-import androidx.camera.view.LifecycleCameraController
-import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,10 +19,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -37,101 +30,9 @@ import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.theme.MainGreen
 import com.example.myapplication.ui.theme.OffBlack
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.example.myapplication.ui.theme.LightGray
 import com.example.myapplication.ui.theme.OffWhite
-import com.google.android.gms.auth.api.phone.SmsCodeAutofillClient
-
-
-
-/*@Composable
-fun NewItemScreen(viewModel: ItemViewModel){
-  *//*  val cameraPermissionState: SmsCodeAutofillClient.PermissionState = rememberPermissionState(android.Manifest.permission.CAMERA)
-
-    MainContent(
-        hasPermission = cameraPermissionState.status.isGranted,
-        onRequestPermission = cameraPermissionState::launchPermissionRequest
-    )*//*
-}
-
-
-@Composable
-private fun MainContent(
-    hasPermission: Boolean,
-    onRequestPermission: () -> Unit
-){
-    if (hasPermission){
-        NewItemGefundenScreen(viewModel = ItemViewModel())
-    }else{
-        NoPermissionScreen(onRequestPermission)
-    }
-}
-
-@Composable
-fun NoPermissionScreen(
-    onRequestPermission: () -> Unit
-) {
-    NoPermissionScreen(
-        onRequestPermission = onRequestPermission
-    )
-}
-
-@Composable
-fun NoPermissionContent(
-    onRequestPermission: () -> Unit
-){
-    Column (
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ){
-        Text(text= "Please grant permission to use the funcionality")
-        Button(onClick= onRequestPermission){
-            Text(text="grant permission")
-        }
-    }
-}
-
-
-@Composable
-fun CameraScreen(
-){
-    CameraContent()
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Composable
-private fun CameraContent(){
-
-    val context = LocalContext.current
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val cameraController = remember{ LifecycleCameraController(context)}
-
-    Scaffold(modifier = Modifier.fillMaxSize()) {paddingValues: PaddingValues ->
-        AndroidView(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            factory = {context ->
-                PreviewView(context).apply{
-                    setBackgroundColor(Color.BLACK)
-                    scaleType = PreviewView.ScaleType.FILL_START
-                }.also {previewView ->
-                    previewView.controller = cameraController
-                    cameraController.bindToLifecycle(lifecycleOwner)
-
-                }
-
-            })
-
-    }
-}*/
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -178,7 +79,6 @@ fun NewItemGefundenScreen(navController: NavController, viewModel: ItemViewModel
                 )
             }
         }
-
         Spacer(modifier = Modifier.height(10.dp))
 
         Box(
@@ -188,16 +88,11 @@ fun NewItemGefundenScreen(navController: NavController, viewModel: ItemViewModel
                 .background(LightGray)
         ) {
             Text(
-                text = "Kamera gefunden",
+                text = "+",
                 color = OffBlack,
-                style = TextStyle(fontSize = 45.sp),
+                style = TextStyle(fontSize = 60.sp),
             )
-          //  CameraScreen()
-            //--------------------
-
-
         }
-
         OutlinedTextField(
             value = viewModel.gefundenTitleEingabe.value,
             onValueChange = { newTitle ->
@@ -208,7 +103,6 @@ fun NewItemGefundenScreen(navController: NavController, viewModel: ItemViewModel
                 .fillMaxWidth(),
             label = { Text(text = "Ich habe gefunden...") }
         )
-
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
@@ -221,7 +115,6 @@ fun NewItemGefundenScreen(navController: NavController, viewModel: ItemViewModel
                 .fillMaxWidth(),
             label = { Text(text = "Beschreibung hinzufügen...") }
         )
-
         Spacer(modifier = Modifier.height(16.dp))
         Box(
             modifier = Modifier
@@ -276,7 +169,5 @@ fun NewItemGefundenScreen(navController: NavController, viewModel: ItemViewModel
         ) {
             Text(text = "Fundstück melden")
         }
-
-
     }
 }

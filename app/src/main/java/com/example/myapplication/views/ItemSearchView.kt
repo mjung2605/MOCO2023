@@ -92,9 +92,9 @@ fun NewItemGesuchtScreen(navController: NavController, viewModel: ItemViewModel)
                 .background(LightGray)
         ) {
             Text(
-                text = "Gesucht",
+                text = "+",
                 color = OffBlack,
-                style = TextStyle(fontSize = 45.sp),
+                style = TextStyle(fontSize = 60.sp),
             )
         }
 
@@ -177,8 +177,6 @@ fun NewItemGesuchtScreen(navController: NavController, viewModel: ItemViewModel)
         ) {
             Text(text = "Objekt Suchen")
         }
-
-
     }
 }
 

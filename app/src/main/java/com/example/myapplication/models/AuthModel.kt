@@ -41,7 +41,6 @@ class UserRepository {
                 }
             }
     }
-
     fun signUpWithEmail(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
@@ -53,8 +52,5 @@ class UserRepository {
                 }
             }
     }
-
     fun currentUser(): FirebaseUser = auth.currentUser ?: throw java.lang.Exception("Kein angemeldeter Benutzer gefunden")
-
-
 }

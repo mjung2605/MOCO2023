@@ -22,6 +22,4 @@ class AuthViewModel : ViewModel() {
                 }
             }
     }
-
-    // Weitere Methoden für Registrierung, Passwort zurücksetzen usw.
 }

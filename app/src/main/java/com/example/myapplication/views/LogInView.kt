@@ -12,14 +12,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.MainBlue
 import com.example.myapplication.ui.theme.MainGreen
 import com.example.myapplication.viewModels.AuthViewModel
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(viewModel: AuthViewModel) {
+fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -59,9 +61,11 @@ fun LoginScreen(viewModel: AuthViewModel) {
         Button(
             onClick = {
                 viewModel.signIn(email, password)
+                navController.navigate("listItems")
             },
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(MainBlue)
+            colors = ButtonDefaults.buttonColors(MainBlue),
+            enabled = email.isNotEmpty() && password.isNotEmpty()
         ) {
             Text("Login")
         }

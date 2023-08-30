@@ -1,31 +1,21 @@
-import android.content.ClipData.Item
+package com.example.myapplication
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-
-
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.myapplication.NavApplicationHost
-
-import com.example.myapplication.R
 import com.example.myapplication.models.FirebaseObject
 import com.example.myapplication.ui.theme.MainBlue
 import com.example.myapplication.ui.theme.MainGreen
 import com.example.myapplication.viewModels.ListViewModel
-
 
 
 @Composable
@@ -61,8 +51,6 @@ fun ListItemScreen(navController: NavHostController, viewModel: ListViewModel) {
                 )
             }
         }
-
-        // Blaue und grüne Boxen
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -126,7 +114,6 @@ fun FirebaseObjectItem(firebaseObject: FirebaseObject) {
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        // Foto des Firebase-Objekts
         Image(
             painter = painterResource(id = R.drawable.lupe),
             contentDescription = null,
@@ -144,5 +131,4 @@ fun FirebaseObjectItem(firebaseObject: FirebaseObject) {
             Text(text = firebaseObject.description)
         }
     }
-
 }
